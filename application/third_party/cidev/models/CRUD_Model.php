@@ -1,10 +1,22 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class REST_Model extends CI_Model {
+class CRUD_Model extends CI_Model {
     
     private $table_name; 
     private $pk;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->init_vars();
+    }
+    
+    /**
+     * Inizializzazione variabili
+     * Implementare nelle sottoclassi
+     */
+    protected function init_vars() {        
+    }
     
     public function pre_load($id) {
     }
