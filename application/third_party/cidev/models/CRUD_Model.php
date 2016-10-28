@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * CRUD Model - Superclass
+ */
 class CRUD_Model extends CI_Model {
     
     private $table_name; 

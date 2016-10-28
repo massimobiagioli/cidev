@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tester extends CI_Controller {
+require_once APPPATH . 'third_party/cidev/libraries/CRUD_Controller.php';
+
+class Tester extends CRUD_Controller {
     
     public function crud() {
         
