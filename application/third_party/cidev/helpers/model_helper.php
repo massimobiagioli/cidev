@@ -6,7 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @param string $table_name Nome tabella fisica
  */
 function instance_model($table_name) {
-    //TODO Fallback su model specifico
     $CI =& get_instance();
     $CI->load->model(table_name_to_model_name($table_name), strtolower($table_name));
 }
