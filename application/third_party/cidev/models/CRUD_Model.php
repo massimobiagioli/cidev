@@ -15,10 +15,17 @@ class CRUD_Model extends CI_Model {
     }
     
     /**
-     * Inizializzazione variabili
+     * Inizializzazione variabili model
+     */
+    private function init_vars() {
+        $this->init_custom_vars();
+    }
+    
+    /**
+     * Inizializzazione variabili specifiche
      * Implementare nelle sottoclassi
      */
-    protected function init_vars() {        
+    protected function init_custom_vars() {        
     }
     
     public function pre_load($id) {

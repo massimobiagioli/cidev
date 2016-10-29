@@ -3,6 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
+| Autoload libraries
+|--------------------------------------------------------------------------
+ */
+function __autoload($class) {
+    if (strpos($class, 'CI_') !== 0) {
+        $file = APPPATH.'third_party/cidev/libraries/'. $class .'.php';
+        if ( file_exists($file) && is_file($file) ) {
+            include_once($file);
+        }
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
 | Base Site URL
 |--------------------------------------------------------------------------
 |
