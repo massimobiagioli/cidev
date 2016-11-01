@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
-| Autoload libraries
+| Autoload libraries (cidev)
 |--------------------------------------------------------------------------
  */
 function __autoload($class) {

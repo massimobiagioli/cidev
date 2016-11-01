@@ -7,7 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class CRUD_Model extends CI_Model {
     
     private $table_name; 
-    private $pk;
+    private $table_fields = [];
+    private $pks = [];
     
     public function __construct() {
         parent::__construct();
@@ -43,7 +44,7 @@ class CRUD_Model extends CI_Model {
         try {       
             $this->pre_load($id);
             
-            $query = $this->db->get_where($this->table_name, array($this->pk => $id));                
+            $query = $this->db->get_where($this->table_name, array($this->pks[0] => $id));                
             $result = $this->transform_result_row($query->row());
             
             $this->post_load($id, $result);
@@ -101,7 +102,7 @@ class CRUD_Model extends CI_Model {
      */
     public function count_query($query_data) {
         try {            
-            $this->db->select("count($this->pk) as RC")
+            $this->db->select("count({$this->pks[0]}) as RC")
                       ->from($this->table_name)
                       ->where($this->get_query_filters($query_data->filters));
                                     
@@ -164,7 +165,7 @@ class CRUD_Model extends CI_Model {
             
             $this->pre_update($id, $data);
             
-            $this->db->where($this->pk, $id);
+            $this->db->where($this->pks[0], $id);
             $this->db->update($this->table_name, $data);                                    
             $result = $this->transform_result_row($this->load($id));  
             
@@ -197,7 +198,7 @@ class CRUD_Model extends CI_Model {
             $this->pre_delete($id);
             
             $row = $this->load($id);
-            $this->db->delete($this->table_name, array($this->pk => $id)); 
+            $this->db->delete($this->table_name, array($this->pks[0] => $id)); 
             $result = $this->transform_result_row($row);
             
             $this->post_delete($id, $result);
@@ -244,16 +245,25 @@ class CRUD_Model extends CI_Model {
         return $this->table_name;
     }
 
-    public function get_pk() {
-        return $this->pk;
-    }
-
     public function set_table_name($table_name) {
         $this->table_name = $table_name;
+        $this->populate_table_info();
     }
-
-    public function set_pk($pk) {
-        $this->pk = $pk;
+    
+    private function populate_table_info() {
+        $this->table_fields = $this->db->field_data($this->get_table_name());
+        
+        // Populate PKs
+        $this->pks = [];
+        foreach ($this->table_fields as $field) {
+            if ($field->primary_key == 1) {
+                $this->pks[] = $field->name;
+            }
+        }
+    }
+    
+    public function get_pks() {
+        return $this->pks;
     }
     
 }
