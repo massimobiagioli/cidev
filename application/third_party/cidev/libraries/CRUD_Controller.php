@@ -74,6 +74,10 @@ class CRUD_Controller extends CI_Controller {
         }
     }
     
+    public function load($id) {
+        echo $id;
+    }
+    
     public function get_controller_name() {
         return $this->controller_name;
     }

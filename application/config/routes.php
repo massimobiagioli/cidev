@@ -52,3 +52,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+/*
+| -------------------------------------------------------------------------
+| API REST
+| -------------------------------------------------------------------------
+ */
+$route['api/(:any)/(:any)/(:num)']['GET'] = '$1/$2/load/$3';
+$route['api/(:any)/(:any)/(:any)']['GET'] = '$1/$2/query/$3';
+$route['api/(:any)/(:any)']['POST'] = '$1/$2/insert';
+$route['api/(:any)/(:any)/(:num)']['PUT'] = '$1/$2/update/$3';
+$route['api/(:any)/(:any)/(:num)']['DELETE'] = '$1/$2/delete/$3';
+$route['api/(:any)/(:any)/count/(:any)']['GET'] = '$1/$2/countQuery/$3';
