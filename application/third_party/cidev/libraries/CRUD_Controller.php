@@ -74,8 +74,233 @@ class CRUD_Controller extends CI_Controller {
         }
     }
     
+    protected function pre_load($id) {
+    }
+    
+    protected function post_load($id, &$row) {
+    }
+    
+    /**
+     * Caricamento elemento per chiave
+     * @param int $id Chiave elemento a caricare
+     */
     public function load($id) {
-        echo $id;
+        // Controllo autorizzazioni
+        if (!$this->check_auth()) {
+            $this->handle_unhautorized();
+            die();
+        }
+        
+        $this->pre_load($id);
+        
+        // Effettua caricamento elemento da model
+        $row = $this->get_model()->load($id);
+        if (!$row) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->post_load($id, $row);
+        
+        $this->handle_json_response($row);
+    } 
+    
+    /**
+     * Conta elementi in funzione dei filtri specificati
+     * @param array $filters Filtri
+     */
+    public function count_query($filters) {
+        // Controllo autorizzazioni
+        if (!$this->check_auth()) {
+            $this->handle_unhautorized();
+            die();
+        }
+        
+        // Parsing dei parametri in ingresso
+        $query_data = $this->parse_query_filters($filters);
+        if ($query_data == null) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        // Effettua conteggio elementi da model
+        $result = $this->get_model()->count_query($query_data);
+        if (!$result) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->handle_json_response($result);
+    }
+    
+    protected function pre_query(&$query_data) {
+    }
+    
+    protected function post_query($query_data, &$result) {
+    }
+    
+    /**
+     * carica elementi in funzione dei filtri specificati
+     * @param array $filters Filtri
+     */
+    public function query($filters) {
+        // Controllo autorizzazioni
+        if (!$this->check_auth()) {
+            $this->handle_unhautorized();
+            die();
+        }
+        
+        // Parsing dei parametri in ingresso
+        $query_data = $this->parse_query_filters($filters);
+        if ($query_data == null) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->pre_query($query_data);
+        
+        // Effettua caricamento elementi da model
+        $result = $this->get_model()->query($query_data);
+        if (!$result) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->post_query($query_data, $result);
+        
+        $this->handle_json_response($result);
+    }
+    
+    protected function pre_insert(&$to_insert) {
+    }
+    
+    protected function post_insert(&$inserted) {
+    }
+    
+    /**
+     * Inserimento di un nuovo elemento
+     */
+    public function insert() {
+        // Controllo autorizzazioni
+        if (!$this->check_auth()) {
+            $this->handle_unhautorized();
+            die();
+        }
+        
+        // Lettura dati da inserire
+        $to_insert = $this->parse_input_data();
+        if (!$to_insert) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->pre_insert($to_insert);
+        
+        // Effettua inserimento di un nuovo elemento da model
+        $inserted = $this->get_model()->insert($to_insert);
+        if (!$inserted) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->post_insert($inserted);
+        
+        $this->handle_json_response($inserted);
+    }
+    
+    protected function pre_update($id, &$to_update) {
+    }
+    
+    protected function post_update(&$updated) {
+    }
+    
+    /**
+     * Aggiornamento elemento
+     * @param int $id Chiave elemento da aggiornare
+     */
+    public function update($id) {
+        // Controllo autorizzazioni
+        if (!$this->check_auth()) {
+            $this->handle_unhautorized();
+            die();
+        }
+        
+        // Lettura dati da inserire
+        $to_update = $this->parse_input_data();
+        if (!$to_update) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->pre_update($id, $to_update);
+        
+        // Effettua aggiornamento elemento da model
+        $updated = $this->get_model()->update($id, $to_update);
+        if (!$updated) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->post_update($updated);
+        
+        $this->handle_json_response($updated);        
+    }
+    
+    protected function pre_delete($id) {
+    }
+    
+    protected function post_delete($id, &$deleted) {
+    }
+    
+    /**
+     * Cancellazione elemento
+     * @param int $id Chiave elemento da cancellare
+     */
+    public function delete($id) {
+        // Controllo autorizzazioni
+        if (!$this->check_auth()) {
+            $this->handle_unhautorized();
+            die();
+        }
+        
+        $this->pre_delete($id);
+        
+        // Effettua cancellazione elemento da model
+        $deleted = $this->get_model()->delete($id);
+        if (!$deleted) {
+            $this->handle_internal_error();
+            die();
+        }
+        
+        $this->post_delete($id, $deleted);
+        
+        $this->handle_json_response($deleted);        
+    }
+    
+    private function check_auth() {
+        return true;
+    }
+    
+    private function parse_query_filters($filters) {
+        return json_decode(base64_decode(urldecode($filters)));
+    }
+    
+    private function parse_input_data() {
+        return json_decode(file_get_contents("php://input"));
+    }
+    
+    private function handle_json_response($data) {
+        $this->output->set_content_type('application/json')
+                     ->set_status_header('200')
+                     ->set_output(json_encode($data));
+    }
+    
+    private function handle_unhautorized() {
+        $this->output->set_status_header('401');
+    }
+    
+    private function handle_internal_error() {
+        $this->output->set_status_header('500');
     }
     
     public function get_controller_name() {

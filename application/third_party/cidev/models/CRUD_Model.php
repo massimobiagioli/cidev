@@ -29,10 +29,10 @@ class CRUD_Model extends CI_Model {
     protected function init_custom_vars() {        
     }
     
-    public function pre_load($id) {
+    protected function pre_load($id) {
     }
     
-    public function post_load($id, &$result) {
+    protected function post_load($id, &$result) {
     }
     
     /**
@@ -56,10 +56,10 @@ class CRUD_Model extends CI_Model {
         }
     }    
     
-    public function pre_query($query_data) {
+    protected function pre_query($query_data) {
     }
     
-    public function post_query($query_data, &$result) {
+    protected function post_query($query_data, &$result) {
     }
     
     /**
@@ -115,10 +115,10 @@ class CRUD_Model extends CI_Model {
         }
     }            
     
-    public function pre_insert($data) {
+    protected function pre_insert($data) {
     }
     
-    public function post_insert($data, &$result) {
+    protected function post_insert($data, &$result) {
     }
     
     /**
@@ -147,10 +147,10 @@ class CRUD_Model extends CI_Model {
         }
     }
     
-    public function pre_update($id, $data) {
+    protected function pre_update($id, $data) {
     }
     
-    public function post_update($id, $data, &$result) {
+    protected function post_update($id, $data, &$result) {
     }
     
     /**
@@ -180,10 +180,10 @@ class CRUD_Model extends CI_Model {
         }
     }
     
-    public function pre_delete($id) {
+    protected function pre_delete($id) {
     }
     
-    public function post_delete($id, &$result) {
+    protected function post_delete($id, &$result) {
     }
     
     /**
