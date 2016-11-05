@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * CRUD Controller - Superclass
  */
-class CRUD_Controller extends CI_Controller {
+class CRUD_controller extends Base_controller {
     
     private $controller_name;
     private $model_alias;
@@ -275,10 +275,6 @@ class CRUD_Controller extends CI_Controller {
         $this->post_delete($id, $deleted);
         
         $this->handle_json_response($deleted);        
-    }
-    
-    private function check_auth() {
-        return true;
     }
     
     private function parse_query_filters($filters) {

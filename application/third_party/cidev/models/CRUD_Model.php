@@ -38,7 +38,7 @@ class CRUD_Model extends CI_Model {
     /**
      * Caricamento record per chiave
      * @param int $id ID tabella
-     * @return mixed Record identificato dalla chiave se trovato, altrimenti false
+     * @return mixed Record identificato dalla chiave se trovato, altrimenti FALSE
      */
     public function load($id) {
         try {       
@@ -52,7 +52,7 @@ class CRUD_Model extends CI_Model {
             return $result;
         } catch (Exception $ex) {            
             log_message('error', $ex->getMessage());
-            return false;
+            return FALSE;
         }
     }    
     
@@ -65,7 +65,7 @@ class CRUD_Model extends CI_Model {
     /**
      * Caricamento dati in funzione dei criteri di ricerca/ordinamento in ingresso
      * @param object $query_data Oggetto QueryData
-     * @return mixed Dati che soddisfano i criteri di ricerca, altrimenti false
+     * @return mixed Dati che soddisfano i criteri di ricerca, altrimenti FALSE
      */
     public function query($query_data) {
         try {        
@@ -91,14 +91,14 @@ class CRUD_Model extends CI_Model {
             return $result;
         } catch (Exception $ex) {
             log_message('error', $ex->getMessage());
-            return false;
+            return FALSE;
         }
     }            
     
     /**
      * Conteggio record in funzione dei criteri di ricerca/ordinamento in ingresso
      * @param object $query_data Oggetto QueryData
-     * @return mixed Numero record in caso di esito positivo, altrimenti false
+     * @return mixed Numero record in caso di esito positivo, altrimenti FALSE
      */
     public function count_query($query_data) {
         try {            
@@ -111,7 +111,7 @@ class CRUD_Model extends CI_Model {
             return $query->row();
         } catch (Exception $ex) {
             log_message('error', $ex->getMessage());
-            return false;
+            return FALSE;
         }
     }            
     
@@ -124,7 +124,7 @@ class CRUD_Model extends CI_Model {
     /**
      * Inserimento di un record sul database
      * @param object $data Dati da inserire
-     * @return mixed Record inserito se esito positivo, altrimenti false
+     * @return mixed Record inserito se esito positivo, altrimenti FALSE
      */
     public function insert($data) {
         try {
@@ -143,7 +143,7 @@ class CRUD_Model extends CI_Model {
             return $result;
         } catch (Exception $ex) {
             log_message('error', $ex->getMessage());
-            return false;
+            return FALSE;
         }
     }
     
@@ -157,7 +157,7 @@ class CRUD_Model extends CI_Model {
      * Aggiornamento di un record sul database
      * @param object $id ID del record da aggiornare
      * @param object $data Dati da aggiornare
-     * @return mixed Record aggiornato se esito positivo, altrimenti false
+     * @return mixed Record aggiornato se esito positivo, altrimenti FALSE
      */
     public function update($id, $data) {
         try {
@@ -176,7 +176,7 @@ class CRUD_Model extends CI_Model {
             return $result;
         } catch (Exception $ex) {
             log_message('error', $ex->getMessage());
-            return false;
+            return FALSE;
         }
     }
     
@@ -189,7 +189,7 @@ class CRUD_Model extends CI_Model {
     /**
      * Cancellazione di un record sul database
      * @param object $id ID del record da cancellare
-     * @return mixed Record eliminato se esito positivo, altrimenti false
+     * @return mixed Record eliminato se esito positivo, altrimenti FALSE
      */
     public function delete($id) {
         try {
@@ -208,7 +208,7 @@ class CRUD_Model extends CI_Model {
             return $result;
         } catch (Exception $ex) {
             log_message('error', $ex->getMessage());
-            return false;
+            return FALSE;
         }
     }
     
