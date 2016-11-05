@@ -9,6 +9,8 @@ class CRUD_Model extends CI_Model {
     private $table_name; 
     private $table_fields = [];
     private $pks = [];
+    private $module_name;
+    private $module_db;
     
     public function __construct() {
         parent::__construct();
@@ -43,8 +45,8 @@ class CRUD_Model extends CI_Model {
     public function load($id) {
         try {       
             $this->pre_load($id);
-            
-            $query = $this->db->get_where($this->table_name, array($this->pks[0] => $id));                
+                        
+            $query = $this->get_module_db()->get_where($this->table_name, array($this->pks[0] => $id));                
             $result = $this->transform_result_row($query->row());
             
             $this->post_load($id, $result);
@@ -71,18 +73,18 @@ class CRUD_Model extends CI_Model {
         try {        
             $this->pre_query($query_data);
             
-            $this->db->select('*')
+            $this->module_db()->select('*')
                       ->from($this->table_name)
                       ->where($this->get_query_filters($query_data->filters));
             
             foreach ($query_data->sort as $sort) {
-                $this->db->order_by($sort->field, $sort->type);
+                $this->module_db()->order_by($sort->field, $sort->type);
             }
             
-            $this->db->limit($query_data->limit)
+            $this->module_db()->limit($query_data->limit)
                       ->offset($query_data->offset);   
             
-            $query = $this->db->get();  
+            $query = $this->module_db()->get();  
             
             $result= $this->transform_result_list($query->result());
             
@@ -102,11 +104,11 @@ class CRUD_Model extends CI_Model {
      */
     public function count_query($query_data) {
         try {            
-            $this->db->select("count({$this->pks[0]}) as RC")
+            $this->module_db()->select("count({$this->pks[0]}) as RC")
                       ->from($this->table_name)
                       ->where($this->get_query_filters($query_data->filters));
                                     
-            $query = $this->db->get();  
+            $query = $this->module_db()->get();  
             
             return $query->row();
         } catch (Exception $ex) {
@@ -128,17 +130,17 @@ class CRUD_Model extends CI_Model {
      */
     public function insert($data) {
         try {
-            $this->db->trans_start();
+            $this->module_db()->trans_start();
             
             $this->pre_insert($data);
             
-            $this->db->insert($this->table_name, $data);
-            $id = $this->db->insert_id();
+            $this->module_db()->insert($this->table_name, $data);
+            $id = $this->module_db()->insert_id();
             $result = $this->transform_result_row($this->load($id));
             
             $this->post_insert($data, $result);
             
-            $this->db->trans_complete();
+            $this->module_db()->trans_complete();
             
             return $result;
         } catch (Exception $ex) {
@@ -161,17 +163,17 @@ class CRUD_Model extends CI_Model {
      */
     public function update($id, $data) {
         try {
-            $this->db->trans_start();
+            $this->module_db()->trans_start();
             
             $this->pre_update($id, $data);
             
-            $this->db->where($this->pks[0], $id);
-            $this->db->update($this->table_name, $data);                                    
+            $this->module_db()->where($this->pks[0], $id);
+            $this->module_db()->update($this->table_name, $data);                                    
             $result = $this->transform_result_row($this->load($id));  
             
             $this->post_update($id, $data, $result);
             
-            $this->db->trans_complete();
+            $this->module_db()->trans_complete();
             
             return $result;
         } catch (Exception $ex) {
@@ -193,17 +195,17 @@ class CRUD_Model extends CI_Model {
      */
     public function delete($id) {
         try {
-            $this->db->trans_start();
+            $this->module_db()->trans_start();
             
             $this->pre_delete($id);
             
             $row = $this->load($id);
-            $this->db->delete($this->table_name, array($this->pks[0] => $id)); 
+            $this->module_db()->delete($this->table_name, array($this->pks[0] => $id)); 
             $result = $this->transform_result_row($row);
             
             $this->post_delete($id, $result);
             
-            $this->db->trans_complete();
+            $this->module_db()->trans_complete();
             
             return $result;
         } catch (Exception $ex) {
@@ -251,7 +253,7 @@ class CRUD_Model extends CI_Model {
     }
     
     private function populate_table_info() {
-        $this->table_fields = $this->db->field_data($this->get_table_name());
+        $this->table_fields = $this->module_db()->field_data($this->get_table_name());
         
         // Populate PKs
         $this->pks = [];
@@ -266,5 +268,21 @@ class CRUD_Model extends CI_Model {
         return $this->pks;
     }
     
+    public function get_module_name() {
+        return $this->module_name;
+    }
+
+    public function set_module_name($module_name) {
+        $this->module_name = $module_name;
+    }
+    
+    public function get_module_db() {
+        return $this->module_db;
+    }
+
+    public function set_module_db($module_db) {
+        $this->module_db = $module_db;
+    }
+
 }
 

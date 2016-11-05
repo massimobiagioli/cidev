@@ -9,11 +9,13 @@ define("CRUD_MODEL_GENERIC", "CRUD_Model");
 if (!function_exists('instance_model_by_controller')) {
     /**
      * Istanzia model a partire dal nome della tabella fisica
+     * @param string $module_name Nome modulo
      * @param string $controller_name Nome controller
      */
-    function instance_model_by_controller($controller_name) {
+    function instance_model_by_controller($module_name, $controller_name) {
         $model_name = controller_name_to_model_name($controller_name); 
         instance_model_by_info([
+           'module_name' => $module_name,
            'name' => $model_name,
            'alias' => controller_name_to_model_alias($controller_name),
            'table_name' => controller_name_to_table_name($controller_name) 
@@ -37,8 +39,28 @@ if (!function_exists('instance_model_by_info')) {
         }
         $model_alias = $model_info['alias'];
         $CI->load->model($model_name, $model_alias);
+        
+        // Imposta nome tabella fisica
         $CI->$model_alias->set_table_name($model_info['table_name']);
+        
+        // Imposta nome modulo sul model
+        $CI->$model_alias->set_module_name($model_info['module_name']);
+        
+        // Carica database in funzione del modulo
+        $db = $CI->load->database(module_name_to_db_name($model_info['module_name']), TRUE);
+        $CI->$model_alias->set_module_db($db);
     }    
+}
+
+if (!function_exists('module_name_to_db_name')) {
+    /**
+     * Restituisce nome database da nome modulo
+     * @param string $module_name Nome modulo
+     * @return string nome database
+     */
+    function module_name_to_db_name($module_name) {
+        return $module_name;
+    }
 }
 
 if (!function_exists('model_exists')) {

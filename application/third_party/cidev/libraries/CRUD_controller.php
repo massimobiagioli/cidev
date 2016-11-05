@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class CRUD_controller extends Base_controller {
     
+    private $module_name;
     private $controller_name;
     private $model_alias;
     
@@ -21,6 +22,7 @@ class CRUD_controller extends Base_controller {
      * Inizializzazione variabili controller
      */
     private function init_vars() {
+        $this->set_module_name($this->router->module);
         $this->set_controller_name($this->router->fetch_class());
         $this->set_model_alias(controller_name_to_model_alias($this->get_controller_name()));
         $this->init_custom_vars();
@@ -38,7 +40,7 @@ class CRUD_controller extends Base_controller {
      */
     private function load_models() {
         // Model principale
-        instance_model_by_controller($this->get_controller_name());
+        instance_model_by_controller($this->get_module_name(), $this->get_controller_name());
         
         // Custom models
         $this->load_custom_models();
@@ -302,7 +304,15 @@ class CRUD_controller extends Base_controller {
     public function get_controller_name() {
         return $this->controller_name;
     }
+    
+    public function get_module_name() {
+        return $this->module_name;
+    }
 
+    public function set_module_name($module_name) {
+        $this->module_name = $module_name;
+    }
+    
     public function set_controller_name($controller_name) {
         $this->controller_name = $controller_name;
     }
