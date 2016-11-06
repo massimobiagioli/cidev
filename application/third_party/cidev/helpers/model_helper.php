@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Nome CRUD Model generico
  */
-define("CRUD_MODEL_GENERIC", "CRUD_Model");
+define("CRUD_MODEL_GENERIC", "CRUD_model");
 
 if (!function_exists('instance_model_by_controller')) {
     /**

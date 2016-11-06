@@ -19,3 +19,16 @@ $config['cidev_cors'] = array(
         'Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'
     )
 );
+
+/*
+|--------------------------------------------------------------------------
+| UUID
+| Wrapper libreria: https://github.com/Repox/codeigniter-uuid
+| Specifiche UUID : http://en.wikipedia.org/wiki/Universally_unique_identifier
+|--------------------------------------------------------------------------
+ */
+$config['cidev_uuid'] = array(
+    'version' => 'v4',
+    'name' => '',
+    'namespace' => ''
+);
