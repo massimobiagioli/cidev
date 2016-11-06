@@ -103,7 +103,7 @@ $autoload['helper'] = array('url', 'model');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('cidev');
+$autoload['config'] = array('cidev', 'models');
 
 /*
 | -------------------------------------------------------------------

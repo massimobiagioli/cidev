@@ -40,15 +40,15 @@ if (!function_exists('instance_model_by_info')) {
         $model_alias = $model_info['alias'];
         $CI->load->model($model_name, $model_alias);
         
-        // Imposta nome tabella fisica
-        $CI->$model_alias->set_table_name($model_info['table_name']);
-        
         // Imposta nome modulo sul model
         $CI->$model_alias->set_module_name($model_info['module_name']);
         
         // Carica database in funzione del modulo
         $db = $CI->load->database(module_name_to_db_name($model_info['module_name']), TRUE);
         $CI->$model_alias->set_module_db($db);
+        
+        // Imposta nome tabella fisica
+        $CI->$model_alias->set_table_name($model_info['table_name']);
     }    
 }
 
@@ -59,6 +59,11 @@ if (!function_exists('module_name_to_db_name')) {
      * @return string nome database
      */
     function module_name_to_db_name($module_name) {
+        $CI =& get_instance();
+        $db_connections = $CI->config->item('modules_db_connections');
+        if (array_key_exists($module_name, $db_connections)) {
+            return $db_connections[$module_name];
+        }
         return $module_name;
     }
 }
@@ -105,6 +110,11 @@ if (!function_exists('controller_name_to_table_name')) {
      * @return string nome tabella fisica
      */
     function controller_name_to_table_name($controller_name) {
+        $CI =& get_instance();
+        $assoc = $CI->config->item('controllers_assoc');
+        if (array_key_exists($controller_name, $assoc)) {
+            return $assoc[$controller_name]['table_name'];
+        }
         return strtolower($controller_name);
     }
 }
@@ -116,7 +126,7 @@ if (!function_exists('controller_name_to_model_name')) {
      * @return string nome model
      */
     function controller_name_to_model_name($controller_name) {
-        return table_name_to_model_name(controller_name_to_table_name($controller_name));
+        return controller_name_to_model_alias($controller_name) . '_model';
     }
 }
 
@@ -127,17 +137,11 @@ if (!function_exists('controller_name_to_model_alias')) {
      * @return string alias model
      */
     function controller_name_to_model_alias($controller_name) {
+        $CI =& get_instance();
+        $assoc = $CI->config->item('controllers_assoc');
+        if (array_key_exists($controller_name, $assoc)) {
+            return $assoc[$controller_name]['model_alias'];
+        }
         return strtolower($controller_name);
-    }
-}
-
-if (!function_exists('table_name_to_model_name')) {
-    /**
-     * Restituisce nome model da nome tabella fisica
-     * @param string $table_name Nome tabella fisica
-     * @return string nome model
-     */
-    function table_name_to_model_name($table_name) {
-        return strtolower($table_name) . '_model';
     }
 }
