@@ -7,4 +7,11 @@ class Soggetto extends CRUD_controller {
         echo generate_uuid();
     }
     
+    public function test_apikey() {
+        $data = [
+            'api_key' => 'xyz'
+        ];
+        $this->load->view('test_apikey', $data);
+    }
+    
 }

@@ -32,3 +32,12 @@ $config['cidev_uuid'] = array(
     'name' => '',
     'namespace' => ''
 );
+
+/*
+|--------------------------------------------------------------------------
+| System Administrator
+|--------------------------------------------------------------------------
+ */
+$config['cidev_sysadmin'] = array(
+    'sysadmin_password' => 'd74-Wnqktm'
+);
