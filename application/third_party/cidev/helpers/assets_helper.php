@@ -51,6 +51,16 @@ if (!function_exists('assets_jquery_url')) {
     }    
 }
 
+if (!function_exists('assets_jqueryui_url')) {
+    /**
+     * Restituisce URL base JQueryUI
+     * @return string URL base JQueryUI
+     */
+    function assets_jqueryui_url() {
+        return assets_base_url() . '/bower_components/jqueryui/jquery-ui.min.js';
+    }    
+}
+
 if (!function_exists('assets_xtagcore_url')) {
     /**
      * Restituisce URL base X-Tag-Core
@@ -58,5 +68,55 @@ if (!function_exists('assets_xtagcore_url')) {
      */
     function assets_xtagcore_url() {
         return assets_base_url() . '/bower_components/x-tag-core/dist/x-tag-core.js';
+    }    
+}
+
+if (!function_exists('assets_primeui_url')) {
+    /**
+     * Restituisce URL base PrimeUI
+     * @return string URL base PrimeUI
+     */
+    function assets_primeui_url() {
+        return assets_base_url() . '/bower_components/primeui/primeui.min.js';
+    }    
+}
+
+if (!function_exists('assets_primeui_css_url')) {
+    /**
+     * Restituisce URL base PrimeUI css
+     * @return string URL base PrimeUI css
+     */
+    function assets_primeui_css_url() {
+        return assets_base_url() . '/bower_components/primeui/primeui.min.css';
+    }    
+}
+
+if (!function_exists('assets_font_awesome_css_url')) {
+    /**
+     * Restituisce URL base font-awesome css
+     * @return string URL base font-awesome css
+     */
+    function assets_font_awesome_css_url() {
+        return assets_base_url() . '/bower_components/fontawesome/css/font-awesome.min.css';
+    }    
+}
+
+if (!function_exists('assets_primeelements_url')) {
+    /**
+     * Restituisce URL base PrimeElements
+     * @return string URL base PrimeElements
+     */
+    function assets_primeelements_url() {
+        return assets_base_url() . '/bower_components/primeui/primeelements.min.js';
+    }    
+}
+
+if (!function_exists('assets_primeui_theme_css_url')) {
+    /**
+     * Restituisce URL base PrimeUI Theme css
+     * @return string URL base PrimeUI Theme css
+     */
+    function assets_primeui_theme_css_url() {
+        return assets_base_url() . '/bower_components/primeui/themes/aristo/theme.css';
     }    
 }
