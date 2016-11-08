@@ -4,16 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>TEST API KEY</title>
+    <title>Login</title>
     <link rel="stylesheet" href="<?php echo assets_primeui_theme_css_url(); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?php echo assets_font_awesome_css_url(); ?>" />    
+    <link rel="stylesheet" type="text/css" href="<?php echo assets_font_awesome_css_url(); ?>" />
     <link rel="stylesheet" href="<?php echo assets_primeui_css_url(); ?>" />
     <script type="text/javascript" src="<?php echo assets_jquery_url(); ?>"></script>
     <script type="text/javascript" src="<?php echo assets_jqueryui_url(); ?>"></script>
     <script type="text/javascript" src="<?php echo assets_primeui_url(); ?>"></script>
     <script type="text/javascript" src="<?php echo assets_xtagcore_url(); ?>"></script>
+    <script type="text/javascript" src="<?php echo assets_primeelements_url(); ?>"></script>
 </head>
 <body>
-    <input type="text" is="p-inputtext" value="" size="30" />
+    
 </body>
 </html>

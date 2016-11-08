@@ -61,16 +61,6 @@ if (!function_exists('assets_jqueryui_url')) {
     }    
 }
 
-if (!function_exists('assets_jqueryui_css_url')) {
-    /**
-     * Restituisce URL base JQueryUI css
-     * @return string URL base JQueryUI css
-     */
-    function assets_jqueryui_css_url() {
-        return assets_base_url() . '/bower_components/jqueryui/jquery-ui.min.js';
-    }    
-}
-
 if (!function_exists('assets_xtagcore_url')) {
     /**
      * Restituisce URL base X-Tag-Core
@@ -87,7 +77,7 @@ if (!function_exists('assets_primeui_url')) {
      * @return string URL base PrimeUI
      */
     function assets_primeui_url() {
-        return assets_base_url() . '/bower_components/primeui/primeui.min.js';
+        return assets_base_url() . '/bower_components/primeui/primeui-all.min.js';
     }    
 }
 
@@ -97,7 +87,7 @@ if (!function_exists('assets_primeui_css_url')) {
      * @return string URL base PrimeUI css
      */
     function assets_primeui_css_url() {
-        return assets_base_url() . '/bower_components/primeui/primeui.min.css';
+        return assets_base_url() . '/bower_components/primeui/primeui-all.min.css';
     }    
 }
 
@@ -127,6 +117,6 @@ if (!function_exists('assets_primeui_theme_css_url')) {
      * @return string URL base PrimeUI Theme css
      */
     function assets_primeui_theme_css_url() {
-        return assets_base_url() . '/bower_components/primeui/themes/aristo/theme.css';
+        return assets_base_url() . '/bower_components/primeui/themes/cupertino/theme.css';
     }    
 }
