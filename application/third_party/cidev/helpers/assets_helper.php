@@ -61,6 +61,16 @@ if (!function_exists('assets_jqueryui_url')) {
     }    
 }
 
+if (!function_exists('assets_jqueryui_css_url')) {
+    /**
+     * Restituisce URL base JQueryUI css
+     * @return string URL base JQueryUI css
+     */
+    function assets_jqueryui_css_url() {
+        return assets_base_url() . '/bower_components/jqueryui/jquery-ui.min.js';
+    }    
+}
+
 if (!function_exists('assets_xtagcore_url')) {
     /**
      * Restituisce URL base X-Tag-Core
