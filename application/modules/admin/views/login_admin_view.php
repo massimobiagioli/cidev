@@ -5,16 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <link rel="stylesheet" href="<?php echo assets_primeui_theme_css_url(); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?php echo assets_font_awesome_css_url(); ?>" />
-    <link rel="stylesheet" href="<?php echo assets_primeui_css_url(); ?>" />
-    <script type="text/javascript" src="<?php echo assets_jquery_url(); ?>"></script>
-    <script type="text/javascript" src="<?php echo assets_jqueryui_url(); ?>"></script>
-    <script type="text/javascript" src="<?php echo assets_primeui_url(); ?>"></script>
-    <script type="text/javascript" src="<?php echo assets_xtagcore_url(); ?>"></script>
-    <script type="text/javascript" src="<?php echo assets_primeelements_url(); ?>"></script>
+    <?=$includes?>
 </head>
 <body>
-    
+    <p-splitbutton icon="fa-check" label="Save" name="save-btn">
+        <p-menuitem icon="fa-edit" text="Update"></p-menuitem>
+        <p-menuitem icon="fa-minus" text="Delete"></p-menuitem>
+        <p-menuitem icon="fa-home" text="Homepage"></p-menuitem>
+    </p-splitbutton>
 </body>
 </html>
