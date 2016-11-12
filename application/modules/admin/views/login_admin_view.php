@@ -40,21 +40,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>    
     <div class="container">
-        <form class="form-signin">
+        <form class="form-signin" method="POST" action="<?php echo admin_form_action_login(); ?>"
             <div class="form-control" align="center">
                 <h2 class="form-signin-heading ui-widget">Backend Login</h2>
             </div>
             
             <div class="form-control" align="center">
                 <label for="username" class="sr-only">Username</label>
-                <input type="text" is="p-inputtext" value="" placeholder="Username" width="30" required autofocus/>
+                <input type="text" is="p-inputtext" name="username" value="" placeholder="Username" width="30" required autofocus/>
             </div>
           
             <div class="form-control" align="center">
                 <label for="password" class="sr-only">Password</label>
-                <input type="password" is="p-password" id="password" placeholder="Password" width="30" required />
+                <input type="password" is="p-password" name="password" placeholder="Password" width="30" required />
             </div>
             
+            <div id="hidden_fields">
+                <input type="hidden" name="<?=$csrf['name'];?>" value="<?=$csrf['hash'];?>" />
+            </div>  
+              
             <div class="form-control" align="center">
                 <button is="p-button" type="submit">Login</button>
             </div>                
