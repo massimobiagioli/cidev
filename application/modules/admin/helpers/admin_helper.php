@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('admin_confirm_login_url')) {
+if (!function_exists('admin_form_action_login')) {
     /**
-     * Restituisce Form Action Login
-     * @return Form Action Login
+     * Restituisce URL console di amministrazione
+     * @return URL console di amministrazione
      */
     function admin_form_action_login() {
-        return base_url() . 'admin/LoginAdmin/confirm_login';
+        return base_url() . 'admin/LoginAdmin/show_console';
     }    
 }

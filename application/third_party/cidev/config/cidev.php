@@ -39,5 +39,5 @@ $config['cidev_uuid'] = array(
 |--------------------------------------------------------------------------
  */
 $config['cidev_sysadmin'] = array(
-    'sysadmin_password' => 'd74-Wnqktm'
+    'sysadmin_password' => 'System.0'
 );

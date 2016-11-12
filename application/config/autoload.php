@@ -58,7 +58,7 @@ $autoload['packages'] = array(APPPATH.'third_party/cidev');
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'uuid');
+$autoload['libraries'] = array('database', 'session', 'uuid');
 
 /*
 | -------------------------------------------------------------------
@@ -117,7 +117,7 @@ $autoload['config'] = array('cidev', 'models');
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] = array();
+$autoload['language'] = array('error_messages', 'labels');
 
 /*
 | -------------------------------------------------------------------
