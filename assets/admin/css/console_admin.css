@@ -1,0 +1,43 @@
+.console-header {
+    font-size: 24px;
+}
+
+.console-body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.console-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.console-content {
+  flex: 1;
+}
+
+.console-nav {
+  /* 12em is the width of the columns */
+  flex: 0 0 12em;
+  
+  /* put the nav on the left */
+  order: -1;
+  
+  margin-right: 5px;
+}
+
+@media (min-width: 768px) {
+  .console-wrapper {
+    flex-direction: row;
+    flex: 1;
+  }
+  .console-content {
+    flex: 1;
+  }
+  .console-nav {
+    /* 12em is the width of the columns */
+    flex: 0 0 12em;
+  }
+}
