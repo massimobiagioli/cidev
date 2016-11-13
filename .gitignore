@@ -29,3 +29,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #ASSETS
 assets/bower_components
 assets/node_modules
+
+#CIDEV-CLIENT
+cidev-client/node_modules
