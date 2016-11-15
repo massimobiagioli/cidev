@@ -120,3 +120,13 @@ if (!function_exists('assets_primeui_theme_css_url')) {
         return assets_base_url() . '/bower_components/primeui/themes/cupertino/theme.css';
     }    
 }
+
+if (!function_exists('assets_default_css_url')) {
+    /**
+     * Restituisce URL base css default
+     * @return string URL base css default
+     */
+    function assets_default_css_url() {
+        return assets_base_url() . '/common/css/default.css';
+    }    
+}

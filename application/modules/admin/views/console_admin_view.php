@@ -18,14 +18,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <main class="console-main">
             <div id="console-main-content"></div>
         </main>
-        <nav class="console-nav">
-            <p-tieredmenu>
-                <p-submenu value="<?=$this->lang->line('api_keys')?>" icon="fa-key">
-                    <p-menuitem value="<?=$this->lang->line('gestione_api_keys')?>" icon="fa-bank"></p-menuitem>
-                </p-submenu>
-                <p-menuitem value="<?=$this->lang->line('esci')?>" icon="fa-close"></p-menuitem>
-            </p-tieredmenu>
+        <nav class="console-nav">                        
+            <div id="sidebar" style="width:300px">
+                <div>
+                    <div><a id="menu-api-keys" data-icon="fa-key"><?=$this->lang->line('api_keys')?></a></div>
+                    <div>
+                        <ul>
+                            <li><a data-icon="fa-bank"><?=$this->lang->line('gestione_api_keys')?></a></li>                            
+                        </ul>
+                    </div>                    
+                </div>
+                <div>
+                    <div><a id="menu-action" data-icon="fa-gear"><?=$this->lang->line('azioni')?></a></div>
+                    <div>
+                        <ul>
+                            <li><a data-icon="fa-close"><?=$this->lang->line('esci')?></a></li>                            
+                        </ul>
+                    </div>        
+                </div>
+            </div>                        
         </nav>
     </div>
+    
+    <script>
+        $('#sidebar').puipanelmenu();
+        $('#menu-api-keys').trigger('click');
+        $('#menu-action').trigger('click');
+    </script>
+    
 </body>
 </html>
