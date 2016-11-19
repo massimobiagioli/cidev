@@ -1,3 +1,5 @@
+import { serverManager } from '../core/serverManager' 
+
 // Aggiunge sottoelementi a menu
 var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId) {
     var children = tag.children();
