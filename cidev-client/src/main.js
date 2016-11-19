@@ -1,6 +1,3 @@
-class Example {
-  constructor(height, width) {
-    this.height = height;
-    this.width = width;
-  }
-}
+require('./core/server.js');
+require('./components/menuitem.js');
+require('./components/panelmenu.js');
