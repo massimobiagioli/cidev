@@ -12,6 +12,11 @@ class LoginAdmin extends CI_Controller{
         $this->show_login();
     }
     
+    public function testc() {
+        $data['includes'] = $this->load->view('common/common_includes_view', NULL, TRUE);
+        $this->load->view('testc', $data);
+    }
+    
     public function show_console() {
         $form_data = $this->input->post();
         

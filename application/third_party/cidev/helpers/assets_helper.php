@@ -130,3 +130,13 @@ if (!function_exists('assets_default_css_url')) {
         return assets_base_url() . '/common/css/default.css';
     }    
 }
+
+if (!function_exists('assets_cidev_client_js_url')) {
+    /**
+     * Restituisce URL js cidev
+     * @return string URL js cidev
+     */
+    function assets_cidev_client_js_url() {
+        return assets_base_url() . '/js/cidev.min.js';
+    }    
+}
