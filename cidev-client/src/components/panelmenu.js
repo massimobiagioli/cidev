@@ -1,15 +1,5 @@
 import { serverManager } from '../core/serverManager' 
 
-// Funzione di callback per gestione click su elemento menu
-var menuItemClicked = function(data) {
-    console.log(data);
-}
-
-// Funzione di callback per gestione errore dopo click su elemento menu
-var menuItemClickError = function(xhr, ajaxOptions, thrownError) {
-    console.log(xhr.status);
-}
-
 // Aggiunge sottoelementi a menu
 var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId) {
     var children = tag.children();
@@ -75,8 +65,7 @@ var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId) {
                     }
                     if (menuClickHandlerSub) {
                         menuitemDomSubitem.on('click', function(e) {
-                            var url = menuClickHandlerSub + '/' + $(e.currentTarget).data('menuId');
-                            serverManager.invokeActionController(url, menuItemClicked, menuItemClickError);
+                            serverManager.invokeActionController(menuClickHandlerSub + '/' + $(e.currentTarget).data('menuId'));
                         });
                     }
                     menuitemDomSubitem.text(textContentSub);

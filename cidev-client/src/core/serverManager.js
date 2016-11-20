@@ -6,15 +6,17 @@ class ServerManager {
     /**
      * Invoca azione di un controller
      * @param url Modulo/Controller/Azione/Parametri
-     * @param onSuccessCallback Funzione di callback da richiamare in caso di esito positivo
-     * @param onErrorCallback Funzione di callback da richiamare in caso di errore
      */
-    invokeActionController(url, onSuccessCallback, onErrorCallback) {
+    invokeActionController(url) {
         $.ajax({
             type: "POST",
             url: url,
-            success: onSuccessCallback,
-            error: onErrorCallback
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+            }
         });
     }
 
