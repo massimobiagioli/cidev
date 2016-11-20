@@ -11,3 +11,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript" src="<?php echo assets_xtagcore_url(); ?>"></script>
 <script type="text/javascript" src="<?php echo assets_primeelements_url(); ?>"></script>
 <script type="text/javascript" src="<?php echo assets_cidev_client_js_url(); ?>"></script>
+
+<?php 
+$CI =& get_instance();
+if ($CI->config->item('csrf_protection')): 
+?>
+<script>
+    $(function() {
+        $.ajaxSetup({
+            data: {
+                '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php echo $this->security->get_csrf_hash(); ?>'
+            }
+        });
+    });
+</script>
+<?php endif; ?>

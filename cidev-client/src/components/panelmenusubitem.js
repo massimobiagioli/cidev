@@ -9,6 +9,9 @@ if(!xtag.tags['cd-panelmenusubitem']) {
             },
             href: {
                 attribute: {}
+            },
+            menuClickHandler: {
+                attribute: {}
             }
         },
         lifecycle: {

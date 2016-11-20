@@ -10,7 +10,7 @@ if(!xtag.tags['cd-panelmenuitem']) {
             href: {
                 attribute: {}
             },
-            expanded: {
+            autoexpand: {
                 attribute: {}
             }
         },

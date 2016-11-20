@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class LoginAdmin extends CI_Controller{
+class LoginAdmin extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
@@ -23,6 +23,10 @@ class LoginAdmin extends CI_Controller{
         } else {
             $this->show_login(TRUE);
         }
+    }
+    
+    public function on_console_sidebar_click($menuId) {
+        echo "gestione $menuId";
     }
     
     private function show_login($from_confirm = FALSE) {
