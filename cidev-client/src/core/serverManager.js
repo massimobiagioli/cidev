@@ -31,9 +31,13 @@ class ServerManager {
             return;
         }
 
-        console.log(jsonData);
+        // Cicla le operazioni client
+        jsonData.clientOperations.forEach(function(clientOperation) {
+            console.log(clientOperation);    
+        });        
     }
 
 }
 
+// Esporta singleton per gestione comunicazione con il server
 export let serverManager = new ServerManager();
