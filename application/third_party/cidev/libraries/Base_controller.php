@@ -30,4 +30,13 @@ class Base_controller extends CI_Controller {
         return TRUE;
     }
     
+    /**
+     * Effettua controllo autenticazione con token csrf
+     * @return boolean TRUE/FALSE
+     */
+    public function check_auth_csrf_token() {
+        $csrf_token = $this->input->get($this->security->get_csrf_token_name());
+        return $csrf_token === $this->security->get_csrf_hash();
+    }
+    
 }
