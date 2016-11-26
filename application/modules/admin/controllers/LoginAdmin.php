@@ -26,7 +26,7 @@ class LoginAdmin extends CI_Controller {
     }
     
     public function on_console_sidebar_click($menuId) {
-        $this->client_manager->set_div_content($menuId, 'console-main-content', 'this is a dummy content');
+        $this->client_manager->set_div_content($menuId, 'console-main-content', 'this is a dummy content', TRUE, TRUE);
     }
     
     private function show_login($from_confirm = FALSE) {

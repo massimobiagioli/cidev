@@ -1,7 +1,13 @@
+import SetDivContentClientOperationProcessor from './processors/SetDivContentClientOperationProcessor'
+
 /**
  * Codeigniter Server Manager
  */
 class ServerManager {
+
+    constructor() {
+        this._initClientOperationProcessorMap();
+    }
 
     /**
      * Invoca azione di un controller
@@ -22,16 +28,32 @@ class ServerManager {
     }
 
     /**
+     * Inizializza mappa delle classi per elaborazione operazioni client
+     */
+    _initClientOperationProcessorMap() {
+        this.clientOperationProcessorMap = new Map();
+        this.clientOperationProcessorMap.set('set_div_content', new SetDivContentClientOperationProcessor());
+    }
+
+    /**
      * Gestione risposta azione controller
      * @param data Stringa in formato json della risposta
      */
     _handleActionControllerResponse(data) {
+        let $this = this; 
         let jsonData = JSON.parse(data);
         if (!jsonData) {
             return;
         }
 
-        console.log(jsonData);
+        // Elabora tutte le operazioni client
+        jsonData.client_operations.forEach(function(operation) {
+            if ($this.clientOperationProcessorMap.has(operation.type)) {
+                $this.clientOperationProcessorMap.get(operation.type).process(operation);
+            } else {
+                console.error('Undefined operation: ' + operation.type);
+            }
+        });
     }
 
 }
