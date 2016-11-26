@@ -11,7 +11,7 @@ export default class extends BaseClientOperationProcessor {
 
     process(operation) {
         super.process(operation);
-        $('#' + operation.params.target).html(operation.params.content);
+        document.location.href = operation.params.url;
     }
 
 }

@@ -1,3 +1,4 @@
+import ChangeViewClientOperationProcessor from './processors/ChangeViewClientOperationProcessor'
 import SetDivContentClientOperationProcessor from './processors/SetDivContentClientOperationProcessor'
 
 /**
@@ -32,6 +33,7 @@ class ServerManager {
      */
     _initClientOperationProcessorMap() {
         this.clientOperationProcessorMap = new Map();
+        this.clientOperationProcessorMap.set('change_view', new ChangeViewClientOperationProcessor());
         this.clientOperationProcessorMap.set('set_div_content', new SetDivContentClientOperationProcessor());
     }
 

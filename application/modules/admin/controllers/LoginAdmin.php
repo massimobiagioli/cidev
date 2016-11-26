@@ -26,7 +26,15 @@ class LoginAdmin extends CI_Controller {
     }
     
     public function on_console_sidebar_click($menuId) {
-        $this->client_manager->set_div_content($menuId, 'console-main-content', 'this is a dummy content', TRUE, TRUE);
+        if ($menuId === 'action-exit') {
+            $this->client_manager->change_view($menuId, 'admin/LoginAdmin', TRUE, TRUE);
+        } else {
+            $view = [
+                'name' => 'console_apikeys_admin_view',
+                'data' => []
+            ];
+            $this->client_manager->set_div_content_by_view($menuId, 'console-main-content', $view, TRUE, TRUE);
+        }
     }
     
     private function show_login($from_confirm = FALSE) {

@@ -6,7 +6,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Client_manager {
     
+    /*
+     * Costanti per operazioni client
+     */
+    const OPERATION_CHANGE_VIEW = 'change_view';
     const OPERATION_SET_DIV_CONTENT = 'set_div_content';
+    
+    /**
+     * Riferimento a Codeigniter
+     * @var object 
+     */
+    private $CI;
     
     /**
      * Elenco operazioni client
@@ -15,7 +25,33 @@ class Client_manager {
     private $client_operations;
     
     public function __construct() {
+        $this->CI =& get_instance();
         $this->clear_client_operations();
+    }
+    
+    /**
+     * Cambia view
+     * @param string $sender Elemento originatore
+     * @param string $view Nuova view
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
+     */
+    public function change_view($sender, $view, $clear = FALSE, $flush = FALSE) {
+        
+        // Controlla svuotamento operazioni client
+        if ($clear) {
+            $this->clear_client_operations();
+        }
+        
+        // Aggiunge operazione client specifica
+        $this->add_client_operation(self::OPERATION_CHANGE_VIEW, $sender, [
+            'url' => base_url($view)
+        ]);
+        
+        // Controlla se deve fare la flush immediata
+        if ($flush) {
+            $this->flush();
+        }
     }
     
     /**
@@ -46,12 +82,28 @@ class Client_manager {
     }
     
     /**
+     * Imposta contenuto di un div
+     * @param string $sender Elemento originatore
+     * @param string $target ID div
+     * @param array $view Informazioni della view:
+     *                      - 'name' => nome view
+     *                      - 'data' => dati da passare alla view
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
+     */
+    public function set_div_content_by_view($sender, $target, $view, $clear = FALSE, $flush = FALSE) {
+        $view_content = $this->CI->load->view($view['name'], $view['data'], TRUE);
+        $this->set_div_content($sender, $target, $view_content, $clear, $flush);
+    }
+    
+    /**
      * Invia operazioni al client
      */
     public function flush() {
-        echo json_encode([
+        $result = json_encode([
             'client_operations' => $this->client_operations
         ]);
+        $this->CI->output->set_output($result); 
     }
     
     private function clear_client_operations() {
