@@ -58,4 +58,5 @@ class ServerManager {
 
 }
 
+// Esporta singleton per gestione comunicazione con il server
 export let serverManager = new ServerManager();
