@@ -43,7 +43,7 @@ class LoginAdmin extends CI_Controller {
         $query_data = new stdClass();
         $query_data->filters = [];
         $query_data->sort = [];
-        $query_data->limit = 10;    // TODO: impostare limite paginazione
+        $query_data->limit = query_limit_model('frontends');
         $query_data->offset = 0;
         return urlencode(base64_encode(json_encode($query_data)));
     }

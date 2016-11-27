@@ -145,3 +145,19 @@ if (!function_exists('controller_name_to_model_alias')) {
         return strtolower($controller_name);
     }
 }
+
+if (!function_exists('query_limit_model')) {
+    /**
+     * Legge il valore limit da utilizzare per le query, relativo al model indicato
+     * @param string $model_name Nome model
+     * @return int valore limit
+     */
+    function query_limit_model($model_name) {
+        $CI =& get_instance();
+        $map = $CI->config->item('models_query_limit');
+        if (array_key_exists($model_name, $map)) {
+            return $map[$model_name];
+        }
+        return $CI->config->item('default_query_limit');
+    }
+}

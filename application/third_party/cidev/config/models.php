@@ -26,9 +26,21 @@ $config['modules_db_connections'] = array();
 | (Se non presente la chiave del controller nell'array, si va di CoC)
 |--------------------------------------------------------------------------
  */
-$config['controllers_assoc'] = array(
+/*$config['controllers_assoc'] = array(
     'Soggetto' => array(
         'table_name' => 'soggetto',
         'model_alias' => 'soggetto'
     )
-);
+);*/
+
+$config['controllers_assoc'] = array();
+
+/*
+|--------------------------------------------------------------------------
+| Parametri paginazione query
+|
+| Se il model non è presente nella mappa, assume il valore di default  
+|--------------------------------------------------------------------------
+ */
+$config['default_query_limit'] = 10;
+$config['models_query_limit'] = array();
