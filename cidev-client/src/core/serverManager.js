@@ -1,5 +1,6 @@
 import ChangeViewClientOperationProcessor from './processors/ChangeViewClientOperationProcessor'
 import ConsoleLogClientOperationProcessor from './processors/ConsoleLogClientOperationProcessor'
+import CreateDialogWithContentClientOperationProcessor from './processors/CreateDialogWithContentClientOperationProcessor'
 import SetDivContentClientOperationProcessor from './processors/SetDivContentClientOperationProcessor'
 
 /**
@@ -36,6 +37,7 @@ class ServerManager {
         this.clientOperationProcessorMap = new Map();
         this.clientOperationProcessorMap.set('change_view', new ChangeViewClientOperationProcessor());
         this.clientOperationProcessorMap.set('console_log', new ConsoleLogClientOperationProcessor());
+        this.clientOperationProcessorMap.set('create_dialog_with_content', new CreateDialogWithContentClientOperationProcessor());
         this.clientOperationProcessorMap.set('set_div_content', new SetDivContentClientOperationProcessor());
     }
 

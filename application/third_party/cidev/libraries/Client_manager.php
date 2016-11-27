@@ -10,8 +10,10 @@ class Client_manager {
      * Costanti per operazioni client
      */
     const OPERATION_CHANGE_VIEW = 'change_view';
-    const OPERATION_SET_DIV_CONTENT = 'set_div_content';
     const OPERATION_CONSOLE_LOG = 'console_log';
+    const OPERATION_CREATE_DIALOG_WITH_CONTENT = 'create_dialog_with_content';
+    const OPERATION_SET_DIV_CONTENT = 'set_div_content';
+    
     
     /**
      * Riferimento a Codeigniter
@@ -72,6 +74,32 @@ class Client_manager {
         // Aggiunge operazione client specifica
         $this->add_client_operation(self::OPERATION_CHANGE_VIEW, $sender, [
             'url' => base_url($view)
+        ]);
+        
+        // Controlla se deve fare la flush immediata
+        if ($flush) {
+            $this->flush();
+        }
+    }
+    
+    /**
+     * Cambia view
+     * @param string $sender Elemento originatore
+     * @param string $view View da caricare
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
+     */
+    public function load_view_into_dialog($sender, $view, $clear = FALSE, $flush = FALSE) {
+        
+        // Controlla svuotamento operazioni client
+        if ($clear) {
+            $this->clear_client_operations();
+        }
+        
+        // Aggiunge operazione client specifica
+        $view_content = $this->CI->load->view($view['name'], $view['data'], TRUE);
+        $this->add_client_operation(self::OPERATION_CREATE_DIALOG_WITH_CONTENT, $sender, [
+            'content' => $view_content
         ]);
         
         // Controlla se deve fare la flush immediata
