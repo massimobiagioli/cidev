@@ -25,9 +25,9 @@ class LoginAdmin extends CI_Controller {
         }
     }
     
-    public function on_console_sidebar_click($menuId) {
-        if ($menuId === 'action-exit') {
-            $this->client_manager->change_view($menuId, 'admin/LoginAdmin', TRUE, TRUE);
+    public function on_console_sidebar_click($menu_id) {
+        if ($menu_id === 'action-exit') {
+            $this->client_manager->change_view($menu_id, 'admin/LoginAdmin', TRUE, TRUE);
         } else {
             $view = [
                 'name' => 'console_apikeys_admin_view',
@@ -35,8 +35,12 @@ class LoginAdmin extends CI_Controller {
                     'filters' => $this->init_apikeys_querydata_filters()
                 ]
             ];
-            $this->client_manager->set_div_content_by_view($menuId, 'console-main-content', $view, TRUE, TRUE);
+            $this->client_manager->set_div_content_by_view($menu_id, 'console-main-content', $view, TRUE, TRUE);
         }
+    }
+    
+    public function on_toolbar_click($toolbar_id) {
+        
     }
     
     private function init_apikeys_querydata_filters() {

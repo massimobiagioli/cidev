@@ -3,7 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?><div>
     <!-- Toolbar -->
     <div id="toolbar">
-        
+        <cd-toolbar id="main-toolbar" menuclickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_toolbar_click')?>">
+            <cd-toolbaritem id="toolbar-add" icon="fa-plus">
+                <?=$this->lang->line('toolbar_aggiungi')?>
+            </cd-toolbaritem>
+            <cd-toolbaritem id="toolbar-edit" icon="fa-pencil">
+                <?=$this->lang->line('toolbar_modifica')?>
+            </cd-toolbaritem>
+            <cd-toolbaritem id="toolbar-delete" icon="fa-trash">
+                <?=$this->lang->line('toolbar_elimina')?>
+            </cd-toolbaritem>
+        </cd-toolbar>
     </div>
     
     <!-- Datatable -->
