@@ -31,10 +31,21 @@ class LoginAdmin extends CI_Controller {
         } else {
             $view = [
                 'name' => 'console_apikeys_admin_view',
-                'data' => []
+                'data' => [
+                    'filters' => $this->init_apikeys_querydata_filters()
+                ]
             ];
             $this->client_manager->set_div_content_by_view($menuId, 'console-main-content', $view, TRUE, TRUE);
         }
+    }
+    
+    private function init_apikeys_querydata_filters() {
+        $query_data = new stdClass();
+        $query_data->filters = [];
+        $query_data->sort = [];
+        $query_data->limit = 10;    // TODO: impostare limite paginazione
+        $query_data->offset = 0;
+        return urlencode(base64_encode(json_encode($query_data)));
     }
     
     private function show_login($from_confirm = FALSE) {

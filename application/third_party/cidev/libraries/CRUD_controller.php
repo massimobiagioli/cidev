@@ -135,40 +135,6 @@ class CRUD_controller extends Base_controller {
         $this->handle_json_response($result);
     }
     
-    protected function pre_load_grid(&$query_data) {
-    }
-    
-    protected function post_load_grid($query_data, &$result) {
-    }
-    
-    /**
-     * Popolamento datagrid
-     */
-    public function load_grid() {
-        
-        // Controllo autorizzazione con csrf_token
-        if (!$this->check_auth_csrf_token()) {
-            $this->handle_unhautorized();
-            die();
-        }
-        
-        // Imposta QueryData in funzione dei parametri
-        $query_data = $this->init_query_data();
-        
-        $this->pre_load_grid($query_data);
-        
-        // Effettua caricamento elementi da model
-        $result = $this->get_model()->query($query_data);
-        if (!$result) {
-            $this->handle_internal_error();
-            die();
-        }
-        
-        $this->post_load_grid($query_data, $result);
-        
-        $this->handle_json_response($result);
-    }
-    
     protected function pre_query(&$query_data) {
     }
     
@@ -186,12 +152,12 @@ class CRUD_controller extends Base_controller {
             die();
         }
         
-        // Parsing dei parametri in ingresso
+        // Popola QueryData dai filtri
         $query_data = $this->parse_query_filters($filters);
         if ($query_data == null) {
             $this->handle_internal_error();
             die();
-        }
+        }            
         
         $this->pre_query($query_data);
         
@@ -319,15 +285,6 @@ class CRUD_controller extends Base_controller {
     
     private function parse_input_data() {
         return json_decode(file_get_contents("php://input"));
-    }
-    
-    private function init_query_data() {
-        $query_data = new stdClass();
-        $query_data->filters = [];
-        $query_data->sort = [];
-        $query_data->limit = 0;
-        $query_data->offset = 0;
-        return $query_data;
     }
     
     private function handle_json_response($data) {
