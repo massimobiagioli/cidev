@@ -11,6 +11,7 @@ class Client_manager {
      */
     const OPERATION_CHANGE_VIEW = 'change_view';
     const OPERATION_SET_DIV_CONTENT = 'set_div_content';
+    const OPERATION_CONSOLE_LOG = 'console_log';
     
     /**
      * Riferimento a Codeigniter
@@ -27,6 +28,31 @@ class Client_manager {
     public function __construct() {
         $this->CI =& get_instance();
         $this->clear_client_operations();
+    }
+    
+    /**
+     * Effettua log attraverso la console
+     * @param string $sender Elemento originatore
+     * @param string $msg Messaggio
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
+     */
+    public function console_log($sender, $msg, $clear = FALSE, $flush = FALSE) {
+        
+        // Controlla svuotamento operazioni client
+        if ($clear) {
+            $this->clear_client_operations();
+        }
+        
+        // Aggiunge operazione client specifica
+        $this->add_client_operation(self::OPERATION_CONSOLE_LOG, $sender, [
+            'msg' => $msg
+        ]);
+        
+        // Controlla se deve fare la flush immediata
+        if ($flush) {
+            $this->flush();
+        }
     }
     
     /**
