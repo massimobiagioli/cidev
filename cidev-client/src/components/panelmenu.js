@@ -36,7 +36,7 @@ var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId, menuCl
             menuitemDomHeaderWrapper.append(menuitemDomHeader);
             menuitemDomWrapper.append(menuitemDomHeaderWrapper);
             
-            // SubElements
+            // Sottoelementi
             var menuitemDomSubitemWrapperDiv = $('<div></div>'),
                 menuitemDomSubitemWrapperUl = $('<ul></ul>');
 
