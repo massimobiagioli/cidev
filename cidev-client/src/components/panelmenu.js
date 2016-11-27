@@ -1,7 +1,7 @@
 import { serverManager } from '../core/serverManager' 
 
 // Aggiunge sottoelementi a menu
-var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId) {
+var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId, menuClickHandler) {
     var children = tag.children();
 
     for(var i = 0; i < children.length; i++) {
@@ -50,7 +50,6 @@ var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId) {
                         idSub = (childTagSub.attr('id') ? idHeader + childTagSub.attr('id') : ''),
                         iconSub = childTagSub.attr('icon'),
                         hrefSub = childTagSub.attr('href'),
-                        menuClickHandlerSub = childTagSub.attr('menuClickHandler'),
                         textContentSub = childTagSub.get(0).textContent;
 
                     if (idSub) {
@@ -63,9 +62,9 @@ var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId) {
                     if (hrefSub) {
                         menuitemDomSubitem.attr('href', hrefSub);
                     }
-                    if (menuClickHandlerSub) {
+                    if (menuClickHandler) {
                         menuitemDomSubitem.on('click', function(e) {
-                            serverManager.invokeActionController(menuClickHandlerSub + '/' + $(e.currentTarget).data('menuId'));
+                            serverManager.invokeActionController(menuClickHandler + '/' + $(e.currentTarget).data('menuId'));
                         });
                     }
                     menuitemDomSubitem.text(textContentSub);
@@ -90,6 +89,9 @@ if(!xtag.tags['cd-panelmenu']) {
             },
             width: {
                 attribute: {}
+            },
+            menuclickhandler: {
+                attribute: {}
             }
         },
         lifecycle: {
@@ -104,14 +106,14 @@ if(!xtag.tags['cd-panelmenu']) {
                 }
                 this.xtag.container = divWrapper.appendTo(this);
 
-                // add children
-                createNestedPanelMenuDom.call(this, element, this.xtag.container, this.id, menuExpandedId);
+                // Aggiunge figli
+                createNestedPanelMenuDom.call(this, element, this.xtag.container, this.id, menuExpandedId, this.menuclickhandler);
                 element.children('cd-panelmenuitem').remove();
 
-                // PrimeUI transform
+                // Render Panelmenu utilizzando PrimeUI
                 $(this.xtag.container).puipanelmenu();
 
-                // Handle Menu expanded
+                // Gestione nodi espansi
                 menuExpandedId.forEach(function(menuId) {
                     $('#' + menuId).trigger('click');
                 });

@@ -19,18 +19,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div id="console-main-content"></div>
         </main>
         <nav class="console-nav">                        
-            <cd-panelmenu id="sidebar" width="300px">
+            <cd-panelmenu id="sidebar" width="300px" menuclickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_console_sidebar_click')?>">
                 <cd-panelmenuitem id="apikeys" icon="fa-key" autoexpand="true"><?=$this->lang->line('api_keys')?>
-                    <cd-panelmenusubitem id="apikeys-handler" 
-                                         icon="fa-bank"
-                                         menuClickHandler="<?php echo components_get_handler('admin', 'LoginAdmin', 'on_console_sidebar_click') ?>">
+                    <cd-panelmenusubitem id="apikeys-handler" icon="fa-bank">
                         <?=$this->lang->line('gestione_api_keys')?>
                     </cd-panelmenusubitem>
                 </cd-panelmenuitem>
                 <cd-panelmenuitem id="actions" icon="fa-gear" autoexpand="true"><?=$this->lang->line('azioni')?>
-                    <cd-panelmenusubitem id="action-exit" 
-                                         icon="fa-close"
-                                         menuClickHandler="<?php echo components_get_handler('admin', 'LoginAdmin', 'on_console_sidebar_click') ?>">
+                    <cd-panelmenusubitem id="action-exit" icon="fa-close">
                         <?=$this->lang->line('esci')?>
                     </cd-panelmenusubitem>
                 </cd-panelmenuitem>
