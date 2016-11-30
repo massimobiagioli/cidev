@@ -85,11 +85,21 @@ class Client_manager {
     /**
      * Cambia view
      * @param string $sender Elemento originatore
-     * @param string $view View da caricare
+     * @param string $dialog_info Info dialog:
+     *                  - view: Nome view da caricare nella dialog
+     *                  - title: Titolo dialog
+     *                  (dialog properties)
+     *                  - showEffect
+     *                  - hideEffect
+     *                  - minimizable
+     *                  - maximizable
+     *                  - responsive
+     *                  - minWidth
+     *                  - modal
      * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
      * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
      */
-    public function load_view_into_dialog($sender, $view, $clear = FALSE, $flush = FALSE) {
+    public function load_view_into_dialog($sender, $dialog_info, $clear = FALSE, $flush = FALSE) {
         
         // Controlla svuotamento operazioni client
         if ($clear) {
@@ -97,9 +107,10 @@ class Client_manager {
         }
         
         // Aggiunge operazione client specifica
-        $view_content = $this->CI->load->view($view['name'], $view['data'], TRUE);
+        $view_content = $this->CI->load->view($dialog_info['view']['name'], $dialog_info['view']['data'], TRUE);
         $this->add_client_operation(self::OPERATION_CREATE_DIALOG_WITH_CONTENT, $sender, [
-            'content' => $view_content
+            'content' => $view_content,
+            'title' => $dialog_info['title']
         ]);
         
         // Controlla se deve fare la flush immediata

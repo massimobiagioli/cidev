@@ -40,12 +40,23 @@ class LoginAdmin extends CI_Controller {
     }
     
     public function on_toolbar_click($toolbar_id) {
-        //$this->client_manager->console_log($toolbar_id, 'TODO: gestione pulsanti toolbar', TRUE, TRUE);
-        $view = [
-            'name' => 'console_apikey_detail_admin_view',
-            'data' => []
+        switch ($toolbar_id) {
+            case 'toolbar-add':
+                $title_lang_key = 'aggiungi';
+                break;
+            case 'toolbar-edit':
+                $title_lang_key = 'modifica';
+                break;
+        }
+        $dialog_info = [
+            'view' => [
+                'name' => 'console_apikey_detail_admin_view',
+                'data' => []
+            ],
+            'title' => $this->lang->line($title_lang_key) . ' ' . $this->lang->line('api_key'),
+            'modal' => TRUE
         ];
-        $this->client_manager->load_view_into_dialog($toolbar_id, $view, TRUE, TRUE);
+        $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {
