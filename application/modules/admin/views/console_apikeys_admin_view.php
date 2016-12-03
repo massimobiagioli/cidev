@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Datatable -->
     <div id="datatable">
         <cd-datatable-wrapper>
-            <p-datatable datasource="<?=base_url('admin/Frontends/query/' . $filters)?>" 
+            <p-datatable id="grid" datasource="<?=base_url('admin/Frontends/query/' . $filters)?>" 
                          paginator rows="10" 
                          selectionmode="single" 
                          caption="<?=$this->lang->line('gestione_api_keys')?>">
