@@ -1,10 +1,13 @@
 import { serverManager } from '../core/serverManager'
 import { appState } from '../core/stateManager'
-import { dataGridHandleRowSelect } from '../core/actions/DataGridActions.js'  
+import { dataGridInit, dataGridHandleRowSelect, dataGridHandleRowUnselect } from '../core/actions/DataGridActions.js'  
 
 // Registra funzioni globali per gestione DataGrid
-function datatableRegisterGlobalFunctions(container, gridId) {
+function datatableRegisterGlobalFunctions(gridId, gridObj) {
     
+    // Iniziaizza stato grid
+    appState.dispatch(dataGridInit(gridId, gridObj));
+
     // Selezione elemento
     window.dataGridHandleRowSelect = function(event, data) {
         appState.dispatch(dataGridHandleRowSelect(gridId, data));
@@ -31,11 +34,8 @@ if(!xtag.tags['cd-datatable-wrapper']) {
                     gridObj = $('#' + childId);
 
                 // Registra funzioni globali per gestione DataGrid    
-                datatableRegisterGlobalFunctions(element, childId);
+                datatableRegisterGlobalFunctions(childId, gridObj);
 
-                // Inizializza array row selezionate
-                this.selectedRows = [];
-                
                 // Registra eventi                 
                 gridObj.attr('onrowselect', 'dataGridHandleRowSelect');
                 gridObj.attr('onrowunselect', 'dataGridHandleRowUnselect');

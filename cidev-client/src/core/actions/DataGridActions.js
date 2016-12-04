@@ -1,3 +1,12 @@
+// Inizializza grid
+export const dataGridInit = (gridId, gridObj) => {
+    return {
+        type: 'dataGridInit',
+        gridId: gridId,
+        selectionMode: gridObj.attr('selectionmode')
+    }
+}; 
+
 // Gestione selezione row
 export const dataGridHandleRowSelect = (gridId, data) => {
     return {

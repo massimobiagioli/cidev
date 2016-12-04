@@ -1,7 +1,7 @@
 import BaseReducerReactor from './BaseReducerReactor'
 
 /**
- * Deselezione row
+ * Selezione row
  */
 export default class extends BaseReducerReactor {
 
@@ -10,10 +10,10 @@ export default class extends BaseReducerReactor {
     }
 
     doAction(state, action) {
+        let newState = state;
         
-        // Rimuove la riga all'insieme delle righe selezionate
-        let newState = _.without(state.grids[action.gridId].selectedRows, action.data);
-        
+        newState.grids[action.gridId].selectedRows.push(action.data);
+        console.log("state: " + JSON.stringify(newState));
         return newState;
     }
 
