@@ -46,7 +46,7 @@ class LoginAdmin extends CI_Controller {
         
         // Se operazione dipende dalla riga, e nessuna riga selezionata, mostra messaggio di errore
         if ($toolbar_id !== 'toolbar-add' && (!$decodedInfo->selectedRows)) {
-            $this->client_manager->error_message($toolbar_id, 
+            $this->client_manager->show_error_message($toolbar_id, 
                     $this->lang->line('errore'), 
                     $this->lang->line('nessuna_riga_selezionata'));
             return;
@@ -59,8 +59,13 @@ class LoginAdmin extends CI_Controller {
             case 'toolbar-edit':
                 $title_lang_key = 'modifica';
                 break;
-            case 'toolbar_delete':
-                break;
+            case 'toolbar-delete':
+                $this->client_manager->show_question($toolbar_id, 
+                    $this->lang->line('conferma_cancellazione'), 
+                    sprintf($this->lang->line('cancellare_elemento'), 
+                            $decodedInfo->selectedRows[0]->fen_id . ' - ' . $decodedInfo->selectedRows[0]->fen_name),
+                    'buttons...');
+                return;
         }
         $dialog_info = [
             'view' => [

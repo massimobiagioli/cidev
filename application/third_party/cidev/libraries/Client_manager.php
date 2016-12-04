@@ -170,7 +170,7 @@ class Client_manager {
      * @param string $title Titolo dialog
      * @param string $message Messaggio
      */
-    public function info_message($sender, $title, $message) {
+    public function show_info_message($sender, $title, $message) {
         $this->show_message($sender, self::MSG_SEVERITY_INFO, $title, $message);
     }
     
@@ -180,7 +180,7 @@ class Client_manager {
      * @param string $title Titolo dialog
      * @param string $message Messaggio
      */
-    public function warning_message($sender, $title, $message) {
+    public function show_warning_message($sender, $title, $message) {
         $this->show_message($sender, self::MSG_SEVERITY_WARNING, $title, $message);
     }
     
@@ -190,9 +190,31 @@ class Client_manager {
      * @param string $title Titolo dialog
      * @param string $message Messaggio
      */
-    public function error_message($sender, $title, $message) {
+    public function show_error_message($sender, $title, $message) {
         $this->show_message($sender, self::MSG_SEVERITY_ERROR, $title, $message);
     }
+    
+    /**
+     * Mostra domanda
+     * @param string $sender Originatore
+     * @param string $title Titolo dialog
+     * @param string $message Messaggio
+     * @param array $buttons Pulsanti
+     */
+    public function show_question($sender, $title, $message, $buttons) {
+        $dialog_info = [
+            'view' => [
+                'name' => 'common/common_question_view',
+                'data' => [
+                    'message' => $message,
+                    'buttons' => $buttons
+                ]
+            ],
+            'title' => $title,
+            'modal' => TRUE
+        ];
+        $this->load_view_into_dialog($sender, $dialog_info, TRUE, TRUE);
+    }    
     
     /**
      * Mostra messaggio
