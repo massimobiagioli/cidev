@@ -40,13 +40,26 @@ class LoginAdmin extends CI_Controller {
     }
     
     public function on_toolbar_click($toolbar_id, $info) {
+        
+        // Decodifica info passate dal componente
         $decodedInfo = component_decode_info($info);
+        
+        // Se operazione dipende dalla riga, e nessuna riga selezionata, mostra messaggio di errore
+        if ($toolbar_id !== 'toolbar-add' && (!$decodedInfo->selectedRows)) {
+            $this->client_manager->error_message($toolbar_id, 
+                    $this->lang->line('errore'), 
+                    $this->lang->line('nessuna_riga_selezionata'));
+            return;
+        }
+                
         switch ($toolbar_id) {
             case 'toolbar-add':
                 $title_lang_key = 'aggiungi';
                 break;
             case 'toolbar-edit':
                 $title_lang_key = 'modifica';
+                break;
+            case 'toolbar_delete':
                 break;
         }
         $dialog_info = [

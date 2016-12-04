@@ -14,6 +14,9 @@ class Client_manager {
     const OPERATION_CREATE_DIALOG_WITH_CONTENT = 'create_dialog_with_content';
     const OPERATION_SET_DIV_CONTENT = 'set_div_content';
     
+    const MSG_SEVERITY_INFO = 'info';
+    const MSG_SEVERITY_WARNING = 'warning';
+    const MSG_SEVERITY_ERROR = 'error';
     
     /**
      * Riferimento a Codeigniter
@@ -159,6 +162,58 @@ class Client_manager {
     public function set_div_content_by_view($sender, $target, $view, $clear = FALSE, $flush = FALSE) {
         $view_content = $this->CI->load->view($view['name'], $view['data'], TRUE);
         $this->set_div_content($sender, $target, $view_content, $clear, $flush);
+    }
+    
+    /**
+     * Mostra messaggio di info
+     * @param string $sender Originatore
+     * @param string $title Titolo dialog
+     * @param string $message Messaggio
+     */
+    public function info_message($sender, $title, $message) {
+        $this->show_message($sender, self::MSG_SEVERITY_INFO, $title, $message);
+    }
+    
+    /**
+     * Mostra messaggio di avvertimento
+     * @param string $sender Originatore
+     * @param string $title Titolo dialog
+     * @param string $message Messaggio
+     */
+    public function warning_message($sender, $title, $message) {
+        $this->show_message($sender, self::MSG_SEVERITY_WARNING, $title, $message);
+    }
+    
+    /**
+     * Mostra messaggio di errore
+     * @param string $sender Originatore
+     * @param string $title Titolo dialog
+     * @param string $message Messaggio
+     */
+    public function error_message($sender, $title, $message) {
+        $this->show_message($sender, self::MSG_SEVERITY_ERROR, $title, $message);
+    }
+    
+    /**
+     * Mostra messaggio
+     * @param string $sender Originatore
+     * @param string $severity Livello messaggio (info/warning/message)
+     * @param string $title Titolo dialog
+     * @param string $message Messaggio
+     */
+    private function show_message($sender, $severity, $title, $message) {
+        $dialog_info = [
+            'view' => [
+                'name' => 'common/common_message_view',
+                'data' => [
+                    'message' => $message,
+                    'severity' => $severity
+                ]
+            ],
+            'title' => $title,
+            'modal' => TRUE
+        ];
+        $this->load_view_into_dialog($sender, $dialog_info, TRUE, TRUE);
     }
     
     /**
