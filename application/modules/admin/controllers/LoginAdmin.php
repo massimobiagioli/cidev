@@ -40,6 +40,7 @@ class LoginAdmin extends CI_Controller {
     }
     
     public function on_toolbar_click($toolbar_id, $info) {
+        $decodedInfo = component_decode_info($info);
         switch ($toolbar_id) {
             case 'toolbar-add':
                 $title_lang_key = 'aggiungi';
@@ -51,13 +52,14 @@ class LoginAdmin extends CI_Controller {
         $dialog_info = [
             'view' => [
                 'name' => 'console_apikey_detail_admin_view',
-                'data' => []
+                'data' => [
+                    'info' => $decodedInfo
+                ]
             ],
             'title' => $this->lang->line($title_lang_key) . ' ' . $this->lang->line('api_key'),
             'modal' => TRUE
         ];
-        //$this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
-        $this->client_manager->console_log($toolbar_id, base64_decode($info), TRUE, TRUE);
+        $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {

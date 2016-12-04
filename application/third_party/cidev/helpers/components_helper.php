@@ -11,3 +11,13 @@ if (!function_exists('components_get_handler')) {
     }    
 }
 
+if (!function_exists('component_decode_info')) {
+    /**
+     * Decodifica informazioni passate dal componente
+     * @param string info Informazioni passate dal componente in base64
+     * @return string informazioni decodificate
+     */
+    function component_decode_info($info) {
+        return json_decode(base64_decode(urldecode($info)));
+    }    
+}

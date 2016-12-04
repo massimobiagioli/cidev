@@ -1,21 +1,21 @@
 import { serverManager } from '../core/serverManager'
-import { appState } from '../core/stateManager'
+import { store } from '../core/stateManager'
 import { dataGridInit, dataGridHandleRowSelect, dataGridHandleRowUnselect } from '../core/actions/DataGridActions.js'  
 
 // Registra funzioni globali per gestione DataGrid
 function datatableRegisterGlobalFunctions(gridId, gridObj) {
     
     // Iniziaizza stato grid
-    appState.dispatch(dataGridInit(gridId, gridObj));
+    store.dispatch(dataGridInit(gridId, gridObj));
 
     // Selezione elemento
     window.dataGridHandleRowSelect = function(event, data) {
-        appState.dispatch(dataGridHandleRowSelect(gridId, data));
+        store.dispatch(dataGridHandleRowSelect(gridId, data));
     }
     
     // Deselezione elemento
     window.dataGridHandleRowUnselect = function(event, data) {
-        appState.dispatch(dataGridHandleRowUnselect(gridId, data));
+        store.dispatch(dataGridHandleRowUnselect(gridId, data));
     }
 }
 

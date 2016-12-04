@@ -13,10 +13,9 @@ reducerReactorMap.set('dataGridHandleRowUnselect', new DataGridHandleRowUnselect
 function defaultReducer(state = {}, action) {
     if (reducerReactorMap.has(action.type)) {
         return reducerReactorMap.get(action.type).doAction(state, action);
-    } else {
-        console.error('Undefined operation: ' + action.type);
-    }
+    } 
+    return state;
 }
 
 // Creazione store
-export const appState = createStore(defaultReducer);
+export const store = createStore(defaultReducer);

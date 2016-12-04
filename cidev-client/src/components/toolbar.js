@@ -1,5 +1,5 @@
 import { serverManager } from '../core/serverManager'
-import { appState } from '../core/stateManager' 
+import { store } from '../core/stateManager' 
 
 // Aggiunge pulsanti a toolbar
 var createNestedElementDom = function(tag, element, id, buttonClickHandler, linkedGrid) {
@@ -25,9 +25,7 @@ var createNestedElementDom = function(tag, element, id, buttonClickHandler, link
             // Gestione click su pulsante
             if (buttonClickHandler) {
                 buttonDom.on('click', function(e) {
-                    console.log("state: " + JSON.stringify(appState));
-                    let info = btoa(appState.grids[linkedGrid]);
-                    
+                    let info = encodeURIComponent(btoa(JSON.stringify(store.getState().grids[linkedGrid])));
                     serverManager.invokeActionController(buttonClickHandler + '/' + $(e.currentTarget).data('buttonId') + '/' + info);
                 });
             }
