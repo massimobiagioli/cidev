@@ -3,7 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?><div>
     <!-- Toolbar -->
     <div id="toolbar">
-        <cd-toolbar id="main-toolbar" menuclickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_toolbar_click')?>">
+        <cd-toolbar id="main-toolbar"
+                    linkedgrid="grid"
+                    buttonclickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_toolbar_click')?>">
             <cd-toolbaritem id="toolbar-add" icon="fa-plus">
                 <?=$this->lang->line('toolbar_aggiungi')?>
             </cd-toolbaritem>

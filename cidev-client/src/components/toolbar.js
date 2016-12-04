@@ -1,7 +1,8 @@
-import { serverManager } from '../core/serverManager' 
+import { serverManager } from '../core/serverManager'
+import { appState } from '../core/stateManager' 
 
 // Aggiunge pulsanti a toolbar
-var createNestedElementDom = function(tag, element, id, menuClickHandler) {
+var createNestedElementDom = function(tag, element, id, buttonClickHandler, linkedGrid) {
     var children = tag.children();
 
     for(var i = 0; i < children.length; i++) {
@@ -14,18 +15,24 @@ var createNestedElementDom = function(tag, element, id, menuClickHandler) {
                 icon = childTag.attr('icon'),
                 textContent = childTag.get(0).textContent;
 
+            // Imposta proprietà pulsante    
             if (fullId) {
                 buttonDom.attr('id', fullId);
                 buttonDom.data('buttonId', childTag.attr('id'));
             }
-    
             buttonDom.text(textContent);
             
-            if (menuClickHandler) {
+            // Gestione click su pulsante
+            if (buttonClickHandler) {
                 buttonDom.on('click', function(e) {
-                    serverManager.invokeActionController(menuClickHandler + '/' + $(e.currentTarget).data('buttonId'));
+                    console.log("state: " + JSON.stringify(appState));
+                    let info = btoa(appState.grids[linkedGrid]);
+                    
+                    serverManager.invokeActionController(buttonClickHandler + '/' + $(e.currentTarget).data('buttonId') + '/' + info);
                 });
             }
+
+            // Effettua il render del pulsante con PrimeUI
             buttonDom.puibutton({
                 icon: icon
             });
@@ -41,7 +48,10 @@ if(!xtag.tags['cd-toolbar']) {
             id: {
                 attribute: {}
             },
-            menuclickhandler: {
+            linkedgrid: {
+                attribute: {}
+            },
+            buttonclickhandler: {
                 attribute: {}
             }
         },
@@ -55,7 +65,7 @@ if(!xtag.tags['cd-toolbar']) {
                 this.xtag.container = divWrapper.appendTo(this);
 
                 // Aggiunge pulsanti
-                createNestedElementDom.call(this, element, this.xtag.container, this.id, this.menuclickhandler);
+                createNestedElementDom.call(this, element, this.xtag.container, this.id, this.buttonclickhandler, this.linkedgrid);
                 element.children('cd-toolbaritem').remove();
             }
         }
