@@ -1,16 +1,18 @@
-import { serverManager } from '../core/serverManager' 
+import { serverManager } from '../core/serverManager'
+import { appState } from '../core/stateManager'
+import { dataGridHandleRowSelect } from '../core/actions/DataGridActions.js'  
 
 // Registra funzioni globali per gestione DataGrid
-function datatableRegisterGlobalFunctions(container) {
+function datatableRegisterGlobalFunctions(container, gridId) {
     
     // Selezione elemento
     window.dataGridHandleRowSelect = function(event, data) {
-        console.log("dataGridHandleRowSelect fired");
+        appState.dispatch(dataGridHandleRowSelect(gridId, data));
     }
     
     // Deselezione elemento
     window.dataGridHandleRowUnselect = function(event, data) {
-        console.log("dataGridHandleRowUnselect fired");
+        appState.dispatch(dataGridHandleRowUnselect(gridId, data));
     }
 }
 
@@ -29,7 +31,7 @@ if(!xtag.tags['cd-datatable-wrapper']) {
                     gridObj = $('#' + childId);
 
                 // Registra funzioni globali per gestione DataGrid    
-                datatableRegisterGlobalFunctions(element);
+                datatableRegisterGlobalFunctions(element, childId);
 
                 // Inizializza array row selezionate
                 this.selectedRows = [];
