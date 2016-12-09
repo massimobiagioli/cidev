@@ -12,6 +12,7 @@ class Client_manager {
     const OPERATION_CHANGE_VIEW = 'change_view';
     const OPERATION_CONSOLE_LOG = 'console_log';
     const OPERATION_CREATE_DIALOG_WITH_CONTENT = 'create_dialog_with_content';
+    const OPERATION_CLOSE_DIALOG = 'close_dialog';
     const OPERATION_SET_DIV_CONTENT = 'set_div_content';
     
     const MSG_SEVERITY_INFO = 'info';
@@ -115,6 +116,28 @@ class Client_manager {
             'content' => $view_content,
             'title' => $dialog_info['title']
         ]);
+        
+        // Controlla se deve fare la flush immediata
+        if ($flush) {
+            $this->flush();
+        }
+    }
+    
+    /**
+     * Chiude dialog
+     * @param string $dialog_name Nome dialog
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
+     */
+    public function close_dialog($dialog_name, $clear = FALSE, $flush = FALSE) {
+        
+        // Controlla svuotamento operazioni client
+        if ($clear) {
+            $this->clear_client_operations();
+        }
+        
+        // Aggiunge operazione client specifica
+        $this->add_client_operation(self::OPERATION_CLOSE_DIALOG, $dialog_name);
         
         // Controlla se deve fare la flush immediata
         if ($flush) {
@@ -252,7 +275,7 @@ class Client_manager {
         $this->client_operations = [];
     }
     
-    private function add_client_operation($type, $sender, $params) {
+    private function add_client_operation($type, $sender, $params = []) {
         $this->client_operations[] = [
             'type' => $type,
             'sender' => $sender,

@@ -8,3 +8,4 @@ require('./components/panelmenu.js');
 require('./components/datatable-wrapper.js');
 require('./components/toolbaritem.js');
 require('./components/toolbar.js');
+require('./components/components-wrapper.js');

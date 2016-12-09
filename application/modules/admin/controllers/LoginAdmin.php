@@ -64,7 +64,18 @@ class LoginAdmin extends CI_Controller {
                     $this->lang->line('conferma_cancellazione'), 
                     sprintf($this->lang->line('cancellare_elemento'), 
                             $decodedInfo->selectedRows[0]->fen_id . ' - ' . $decodedInfo->selectedRows[0]->fen_name),
-                    'buttons...');
+                    [
+                        [
+                            'id' => 'btn_yes',
+                            'text' => $this->lang->line('si'),
+                            'clickhandler' => components_get_handler('admin', 'LoginAdmin', 'on_question_delete')
+                        ],
+                        [
+                            'id' => 'btn_no',
+                            'text' => $this->lang->line('no'),
+                            'clickhandler' => components_get_handler('admin', 'LoginAdmin', 'on_question_delete')
+                        ]
+                    ]);
                 return;
         }
         $dialog_info = [
@@ -78,6 +89,16 @@ class LoginAdmin extends CI_Controller {
             'modal' => TRUE
         ];
         $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
+    }
+    
+    public function on_question_delete($button_id) {
+        switch ($button_id) {
+            case 'btn_yes':
+                break;
+            case 'btn_no':
+                break;
+        }
+        $this->client_manager->close_dialog('toolbar-delete', TRUE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {
