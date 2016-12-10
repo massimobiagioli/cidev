@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class LoginAdmin extends CI_Controller {
     
+    const OPERATION_INSERT = 'insert';
+    const OPERATION_UPDATE = 'update';
+    
     public function __construct() {
         parent::__construct();
         $this->load->helper('admin');
@@ -55,15 +58,17 @@ class LoginAdmin extends CI_Controller {
         switch ($toolbar_id) {
             case 'toolbar-add':
                 $title_lang_key = 'aggiungi';
+                $operation = self::OPERATION_INSERT;
                 break;
             case 'toolbar-edit':
                 $title_lang_key = 'modifica';
+                $operation = self::OPERATION_UPDATE;
                 break;
             case 'toolbar-delete':
                 $this->client_manager->show_question($toolbar_id, 
                     $this->lang->line('conferma_cancellazione'), 
                     sprintf($this->lang->line('cancellare_elemento'), 
-                            $decodedInfo->selectedRows[0]->fen_id . ' - ' . $decodedInfo->selectedRows[0]->fen_name),
+                    $decodedInfo->selectedRows[0]->fen_id . ' - ' . $decodedInfo->selectedRows[0]->fen_name),
                     [
                         [
                             'id' => 'btn_yes',
@@ -82,7 +87,8 @@ class LoginAdmin extends CI_Controller {
             'view' => [
                 'name' => 'console_apikey_detail_admin_view',
                 'data' => [
-                    'info' => $decodedInfo
+                    'info' => $decodedInfo,
+                    'operation' => $operation
                 ]
             ],
             'title' => $this->lang->line($title_lang_key) . ' ' . $this->lang->line('api_key'),
@@ -102,8 +108,8 @@ class LoginAdmin extends CI_Controller {
         $this->client_manager->close_dialog('toolbar-delete', TRUE, TRUE);
     }
     
-    public function on_confirm_detail() {
-        $this->client_manager->console_log('detail', json_encode($this->input->post()), TRUE, TRUE);
+    public function on_confirm_detail($operation, $button_id) {
+        $this->client_manager->console_log($button_id, $operation . ' ' . $button_id, TRUE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {

@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><div>
-    <form method="POST" action="<?=components_get_handler('admin', 'LoginAdmin', 'on_confirm_detail')?>">
-            
+    <cd-form-wrapper operation="<?=$operation?>">
+        
         <div class="ui-grid ui-grid-responsive">
             
             <!-- Nome -->
@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label for="fen_name"><?=$this->lang->line('nome')?></label>
                 </div>
                 <div class="ui-grid-col-10">
-                    <input type="text" is="p-inputtext" name="fen_name" size="55" value="" required autofocus/>
+                    <input type="text" is="p-inputtext" id="fen_name" size="55" value="" required autofocus/>
                 </div>
             </div>
             
@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label for="fen_api_key"><?=$this->lang->line('api_key')?></label>
                 </div>
                 <div class="ui-grid-col-10">
-                    <input type="text" is="p-inputtext" name="fen_api_key" size="55" value="" required/>
+                    <input type="text" is="p-inputtext" id="fen_api_key" size="55" value="" required/>
                 </div>
             </div>
             
@@ -31,18 +31,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label for="fen_disabled"><?=$this->lang->line('disabilitato')?></label>
                 </div>
                 <div class="ui-grid-col-10">
-                    <input type="checkbox" is="p-checkbox" name="fen_disabled" value=""/>
+                    <input type="checkbox" is="p-checkbox" id="fen_disabled" value=""/>
                 </div>
             </div>
         </div>  
         
         <hr>
-
+        
         <!-- Pulsanti -->
-        <div style="text-align: center">
-            <button is="p-button" type="submit" id="btn_confirm"><?=$this->lang->line('conferma')?></button>
-            <button is="p-button" id="btn_cancel"><?=$this->lang->line('annulla')?></button> 
+        <div id="button_container" style="text-align: center">
+            
+            <!-- Conferma -->
+            <button 
+                is="p-button" 
+                id="btn_confirm"
+                data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_confirm_detail')?>"><?=$this->lang->line('conferma')?></button>
+            
+            <!-- Annulla -->
+            <button 
+                is="p-button" 
+                id="btn_cancel"
+                data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_confirm_detail')?>"><?=$this->lang->line('annulla')?></button> 
         </div>
 
-    </form>
+    </cd-form-wrapper>
 </div>

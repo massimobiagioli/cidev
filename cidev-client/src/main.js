@@ -9,3 +9,4 @@ require('./components/datatable-wrapper.js');
 require('./components/toolbaritem.js');
 require('./components/toolbar.js');
 require('./components/components-wrapper.js');
+require('./components/form-wrapper.js');
