@@ -86,7 +86,8 @@ class LoginAdmin extends CI_Controller {
                 ]
             ],
             'title' => $this->lang->line($title_lang_key) . ' ' . $this->lang->line('api_key'),
-            'modal' => TRUE
+            'modal' => TRUE,
+            'width' => 600
         ];
         $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
     }
@@ -99,6 +100,10 @@ class LoginAdmin extends CI_Controller {
                 break;
         }
         $this->client_manager->close_dialog('toolbar-delete', TRUE, TRUE);
+    }
+    
+    public function on_confirm_detail() {
+        $this->client_manager->console_log('detail', json_encode($this->input->post()), TRUE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {

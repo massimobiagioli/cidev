@@ -22,7 +22,7 @@ export default class extends BaseClientOperationProcessor {
         // Aggiunge div a body
         $('#' + dialogId).remove();
         $('body').append(divWrapper);
-
+        
         // Effettua il render della dialog
         $('#' + dialogId).puidialog({
             showEffect: operation.params.showEffect || '',
@@ -30,7 +30,8 @@ export default class extends BaseClientOperationProcessor {
             minimizable: operation.params.minimizable || true,
             maximizable: operation.params.maximizable || true,
             responsive: operation.params.responsive || true,
-            minWidth: operation.params.minWidth || 200,
+            minWidth: operation.params.minWidth || 150,
+            width: operation.params.width || 300,
             modal: operation.params.modal || true
         }).puidialog('show');
     }

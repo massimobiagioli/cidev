@@ -15,9 +15,18 @@ class Client_manager {
     const OPERATION_CLOSE_DIALOG = 'close_dialog';
     const OPERATION_SET_DIV_CONTENT = 'set_div_content';
     
+    /*
+     * Costanti per livello di messaggio
+     */
     const MSG_SEVERITY_INFO = 'info';
     const MSG_SEVERITY_WARNING = 'warning';
     const MSG_SEVERITY_ERROR = 'error';
+    
+    /*
+     * Costanti per valori di default
+     */
+    const DEFAULT_DIALOG_MIN_WIDTH = 150;
+    const DEFAULT_DIALOG_WIDTH = 300;
     
     /**
      * Riferimento a Codeigniter
@@ -114,7 +123,15 @@ class Client_manager {
         $view_content = $this->CI->load->view($dialog_info['view']['name'], $dialog_info['view']['data'], TRUE);
         $this->add_client_operation(self::OPERATION_CREATE_DIALOG_WITH_CONTENT, $sender, [
             'content' => $view_content,
-            'title' => $dialog_info['title']
+            'title' => $dialog_info['title'],
+            'showEffect' => (array_key_exists('showEffect', $dialog_info) ? $dialog_info['showEffect'] : ''),
+            'hideEffect' => (array_key_exists('hideEffect', $dialog_info) ? $dialog_info['hideEffect'] : ''),
+            'minimizable' => (array_key_exists('minimizable', $dialog_info) ? $dialog_info['minimizable'] : TRUE),
+            'maximizable' => (array_key_exists('maximizable', $dialog_info) ? $dialog_info['maximizable'] : TRUE),
+            'responsive' => (array_key_exists('responsive', $dialog_info) ? $dialog_info['responsive'] : TRUE),
+            'width' => (array_key_exists('width', $dialog_info) ? $dialog_info['width'] : self::DEFAULT_DIALOG_WIDTH),
+            'minWidth' => (array_key_exists('minWidth', $dialog_info) ? $dialog_info['minWidth'] : self::DEFAULT_DIALOG_MIN_WIDTH),
+            'modal' => (array_key_exists('modal', $dialog_info) ? $dialog_info['modal'] : TRUE)
         ]);
         
         // Controlla se deve fare la flush immediata
