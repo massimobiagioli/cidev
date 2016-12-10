@@ -51,6 +51,26 @@ if (!function_exists('assets_jquery_url')) {
     }    
 }
 
+if (!function_exists('assets_jquery_validation_url')) {
+    /**
+     * Restituisce URL base JQuery Validation
+     * @return string URL base JQuery Validation
+     */
+    function assets_jquery_validation_url() {
+        return assets_base_url() . '/bower_components/jquery-validation/dist/jquery.validate.min.js';
+    }    
+}
+
+if (!function_exists('assets_jquery_validation_additional_methods_url')) {
+    /**
+     * Restituisce URL base JQuery Validation Additional Methods
+     * @return string URL base JQuery Validation Additional Methods
+     */
+    function assets_jquery_validation_additional_methods_url() {
+        return assets_base_url() . '/bower_components/jquery-validation/dist/additional-methods.min.js';
+    }    
+}
+
 if (!function_exists('assets_jqueryui_url')) {
     /**
      * Restituisce URL base JQueryUI

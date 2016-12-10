@@ -10,6 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript" src="<?php echo assets_primeui_url(); ?>"></script>
 <script type="text/javascript" src="<?php echo assets_xtagcore_url(); ?>"></script>
 <script type="text/javascript" src="<?php echo assets_primeelements_url(); ?>"></script>
+<script type="text/javascript" src="<?php echo assets_jquery_validation_url(); ?>"></script>
+<script type="text/javascript" src="<?php echo assets_jquery_validation_additional_methods_url(); ?>"></script>
 <script type="text/javascript" src="<?php echo assets_cidev_client_js_url(); ?>"></script>
 
 <?php 

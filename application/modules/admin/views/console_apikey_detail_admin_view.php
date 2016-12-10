@@ -53,6 +53,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 id="btn_cancel"
                 data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_confirm_detail')?>"><?=$this->lang->line('annulla')?></button> 
         </div>
-
+        
     </cd-form-wrapper>
 </div>

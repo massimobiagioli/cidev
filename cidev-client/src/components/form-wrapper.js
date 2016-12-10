@@ -9,7 +9,20 @@ let processButtonContainer = function(tag, childTagSubChildren, operation) {
         
         if (buttonClickHandler) {    
             tag.on('click', '#' + childSubId, function(e) {   
-                serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId);
+                e.preventDefault();
+
+                // Effettua validazione
+                if (childSubId === 'btn_confirm') {
+                    $('#detail_form').validate();
+                    if ($('#detail_form').valid()) {
+                        serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId);
+                    } else {
+                        return;
+                    }
+                } else {
+                    serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId);
+                }
+                
             });
         }    
     }
@@ -32,6 +45,7 @@ let processChildren = function(tag, element, id, operation) {
                 break;
         }
 
+        element.append(children);
     }
 }
 
@@ -47,11 +61,14 @@ if(!xtag.tags['cd-form-wrapper']) {
         },
         lifecycle: {
             created: function() {
-                let element = $(this);
+                let element = $(this),
+                    formWrapper = $('<form id="detail_form"></form>');
+
+                // Form wrapper    
+                this.xtag.container = formWrapper.appendTo(this);
 
                 // Elabora elementi
                 processChildren.call(this, element, this.xtag.container, this.id, this.operation);
-                element.children('cd-form').remove();
             }
         }
     });
