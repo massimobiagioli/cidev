@@ -5,20 +5,17 @@ var processChildren = function(tag, element, id) {
     var children = tag.children();
 
     for(var i = 0; i < children.length; i++) {
-        var childTag = children.eq(i),
+        let childTag = children.eq(i),
             childId = childTag.attr('id'),
             clickHandler = childTag.data('clickhandler');
 
-        (function(childId, clickHandler) {
-            
-            // Evento click
-            if (clickHandler) {    
-                tag.on('click', '#' + childId, function(e) {   
-                    serverManager.invokeActionController(clickHandler + '/' + childId);
-                });
-            }
-            
-        })(childId, clickHandler); 
+        // Evento click
+        if (clickHandler) {    
+            tag.on('click', '#' + childId, function(e) {   
+                serverManager.invokeActionController(clickHandler + '/' + childId);
+            });
+        }
+       
     }
 }
 
