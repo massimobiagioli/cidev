@@ -43,7 +43,7 @@ class LoginAdmin extends CI_Controller {
     }
     
     public function on_toolbar_click($toolbar_id, $info) {
-        
+               
         // Decodifica info passate dal componente
         $decodedInfo = component_decode_info($info);
         
@@ -73,7 +73,8 @@ class LoginAdmin extends CI_Controller {
                         [
                             'id' => 'btn_yes',
                             'text' => $this->lang->line('si'),
-                            'clickhandler' => components_get_handler('admin', 'LoginAdmin', 'on_question_delete')
+                            'clickhandler' => components_get_handler('admin', 'LoginAdmin', 'on_question_delete'),
+                            'info' => $info
                         ],
                         [
                             'id' => 'btn_no',
@@ -83,6 +84,7 @@ class LoginAdmin extends CI_Controller {
                     ]);
                 return;
         }
+        
         $dialog_info = [
             'view' => [
                 'name' => 'console_apikey_detail_admin_view',
@@ -98,18 +100,37 @@ class LoginAdmin extends CI_Controller {
         $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
     }
     
-    public function on_question_delete($button_id) {
-        switch ($button_id) {
-            case 'btn_yes':
-                break;
-            case 'btn_no':
-                break;
+    public function on_question_delete($button_id, $info) {
+        
+        // TODO: testare
+        $this->client_manager->console_log($button_id, $info, TRUE, FALSE);
+        
+        // Effettua cancellazione dei dati
+        if ($button_id === 'btn_yes') {
+            // TODO
         }
-        $this->client_manager->close_dialog('toolbar-delete', TRUE, TRUE);
+        
+        // Effettua chiusura dialog
+        $this->client_manager->close_dialog('toolbar-delete', FALSE, TRUE);
     }
     
     public function on_confirm_detail($operation, $button_id) {
-        $this->client_manager->console_log($button_id, $operation . ' ' . $button_id, TRUE, TRUE);
+        
+        // Effettua salvataggio dei dati
+        if ($button_id === 'btn_confirm') {
+            // TODO
+        }
+        
+        // Chiusura dialog
+        switch ($operation) {
+            case self::OPERATION_INSERT:
+                $dialogName = 'toolbar-add';
+                break;
+            case self::OPERATION_UPDATE:
+                $dialogName = 'toolbar-edit';
+                break;
+        }
+        $this->client_manager->close_dialog($dialogName, TRUE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {

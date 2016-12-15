@@ -7,12 +7,13 @@ var processChildren = function(tag, element, id) {
     for(var i = 0; i < children.length; i++) {
         let childTag = children.eq(i),
             childId = childTag.attr('id'),
-            clickHandler = childTag.data('clickhandler');
+            clickHandler = childTag.data('clickhandler'),
+            info = childTag.data('info') || '_';
 
         // Evento click
         if (clickHandler) {    
             tag.on('click', '#' + childId, function(e) {   
-                serverManager.invokeActionController(clickHandler + '/' + childId);
+                serverManager.invokeActionController(clickHandler + '/' + childId + '/' + info);
             });
         }
        
