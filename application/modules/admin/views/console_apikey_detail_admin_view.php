@@ -45,13 +45,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <button 
                 is="p-button" 
                 id="btn_confirm"
-                data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_confirm_detail')?>"><?=$this->lang->line('conferma')?></button>
+                data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_apikeys_confirm_detail')?>"><?=$this->lang->line('conferma')?></button>
             
             <!-- Annulla -->
             <button 
                 is="p-button" 
                 id="btn_cancel"
-                data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_confirm_detail')?>"><?=$this->lang->line('annulla')?></button> 
+                data-clickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_apikeys_confirm_detail')?>"><?=$this->lang->line('annulla')?></button> 
         </div>
         
     </cd-form-wrapper>

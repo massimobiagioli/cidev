@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div id="toolbar">
         <cd-toolbar id="main-toolbar"
                     linkedgrid="grid"
-                    buttonclickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_toolbar_click')?>">
+                    buttonclickhandler="<?=components_get_handler('admin', 'LoginAdmin', 'on_apikeys_toolbar_click')?>">
             <cd-toolbaritem id="toolbar-add" icon="fa-plus">
                 <?=$this->lang->line('toolbar_aggiungi')?>
             </cd-toolbaritem>
