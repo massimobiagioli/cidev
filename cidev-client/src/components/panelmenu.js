@@ -1,23 +1,23 @@
 import { serverManager } from '../core/serverManager' 
 
 // Aggiunge sottoelementi a menu
-var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId, menuClickHandler) {
-    var children = tag.children();
+let createNestedPanelMenuDom = function(tag, element, id, menuExpandedId, menuClickHandler) {
+    let children = tag.children();
 
-    for(var i = 0; i < children.length; i++) {
-        var childTag = children.eq(i),
+    for(let i = 0; i < children.length; i++) {
+        let childTag = children.eq(i),
             childTagSubChildren = childTag.children(),
             childTagname = childTag.get(0).tagName.toLowerCase();
         
         if(childTagname === 'cd-panelmenuitem') {       
-            var menuitemDomWrapper = $('<div></div>'),
+            let menuitemDomWrapper = $('<div></div>'),
                 menuitemDomHeaderWrapper = $('<div></div>'),
                 menuitemDomHeader = $('<a></a>'),
                 idHeader = (childTag.attr('id') ? (id ? id + '-' : '') + childTag.attr('id') : ''),
                 icon = childTag.attr('icon'),
                 href = childTag.attr('href'),
                 autoexpand = childTag.attr('autoexpand'),
-                textContent = childTag.get(0).textContent;
+                textContent = childTag.clone().children().remove().end().text();
 
             // Header    
             if (idHeader) {
@@ -37,15 +37,15 @@ var createNestedPanelMenuDom = function(tag, element, id, menuExpandedId, menuCl
             menuitemDomWrapper.append(menuitemDomHeaderWrapper);
             
             // Sottoelementi
-            var menuitemDomSubitemWrapperDiv = $('<div></div>'),
+            let menuitemDomSubitemWrapperDiv = $('<div></div>'),
                 menuitemDomSubitemWrapperUl = $('<ul></ul>');
 
-            for(var j = 0; j < childTagSubChildren.length; j++) {
-                var childTagSub = childTagSubChildren.eq(j),
+            for(let j = 0; j < childTagSubChildren.length; j++) {
+                let childTagSub = childTagSubChildren.eq(j),
                     childTagnameSub = childTagSub.get(0).tagName.toLowerCase();
 
                 if(childTagnameSub === 'cd-panelmenusubitem') {  
-                    var menuitemDomSubitemLi = $('<li></li>'),
+                    let menuitemDomSubitemLi = $('<li></li>'),
                         menuitemDomSubitem = $('<a></a>'),
                         idSub = (childTagSub.attr('id') ? idHeader + childTagSub.attr('id') : ''),
                         iconSub = childTagSub.attr('icon'),
@@ -96,7 +96,7 @@ if(!xtag.tags['cd-panelmenu']) {
         },
         lifecycle: {
             created: function() {
-                var element = $(this),
+                let element = $(this),
                     divWrapper = $('<div></div>'),
                     menuExpandedId = [];
 

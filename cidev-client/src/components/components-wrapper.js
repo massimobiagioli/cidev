@@ -1,10 +1,10 @@
 import { serverManager } from '../core/serverManager'
 
 // Elabora elementi
-var processChildren = function(tag, element, id) {
-    var children = tag.children();
+let processChildren = function(tag, element, id) {
+    let children = tag.children();
 
-    for(var i = 0; i < children.length; i++) {
+    for(let i = 0; i < children.length; i++) {
         let childTag = children.eq(i),
             childId = childTag.attr('id'),
             clickHandler = childTag.data('clickhandler'),
@@ -29,7 +29,7 @@ if(!xtag.tags['cd-components-wrapper']) {
         },
         lifecycle: {
             created: function() {
-                var element = $(this);
+                let element = $(this);
 
                 // Elabora elementi
                 processChildren.call(this, element, this.xtag.container, this.id);

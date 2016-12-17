@@ -28,7 +28,7 @@ if(!xtag.tags['cd-datatable-wrapper']) {
         },
         lifecycle: {
             created: function() {
-                var element = $(this),
+                let element = $(this),
                     grid = element.children().eq(0).get(0),
                     childId = grid.id,
                     gridObj = $('#' + childId);

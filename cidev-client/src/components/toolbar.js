@@ -2,15 +2,15 @@ import { serverManager } from '../core/serverManager'
 import { store } from '../core/stateManager' 
 
 // Aggiunge pulsanti a toolbar
-var createNestedElementDom = function(tag, element, id, buttonClickHandler, linkedGrid) {
-    var children = tag.children();
+let createNestedElementDom = function(tag, element, id, buttonClickHandler, linkedGrid) {
+    let children = tag.children();
 
-    for(var i = 0; i < children.length; i++) {
-        var childTag = children.eq(i),
+    for(let i = 0; i < children.length; i++) {
+        let childTag = children.eq(i),
             childTagname = childTag.get(0).tagName.toLowerCase();
         
         if(childTagname === 'cd-toolbaritem') {       
-            var buttonDom = $('<button type="button"></button>'), 
+            let buttonDom = $('<button type="button"></button>'), 
                 fullId = (childTag.attr('id') ? (id ? id + '-' : '') + childTag.attr('id') : ''),
                 icon = childTag.attr('icon'),
                 textContent = childTag.get(0).textContent;
@@ -55,7 +55,7 @@ if(!xtag.tags['cd-toolbar']) {
         },
         lifecycle: {
             created: function() {
-                var element = $(this),
+                let element = $(this),
                     divWrapper = $('<div></div>');
 
                 // Div Wrapper    
