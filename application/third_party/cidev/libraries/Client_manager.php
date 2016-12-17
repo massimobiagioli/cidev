@@ -209,9 +209,11 @@ class Client_manager {
      * @param string $sender Originatore
      * @param string $title Titolo dialog
      * @param string $message Messaggio
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
      */
-    public function show_info_message($sender, $title, $message) {
-        $this->show_message($sender, self::MSG_SEVERITY_INFO, $title, $message);
+    public function show_info_message($sender, $title, $message, $clear = FALSE, $flush = FALSE) {
+        $this->show_message($sender, self::MSG_SEVERITY_INFO, $title, $message, $clear, $flush);
     }
     
     /**
@@ -219,9 +221,11 @@ class Client_manager {
      * @param string $sender Originatore
      * @param string $title Titolo dialog
      * @param string $message Messaggio
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
      */
-    public function show_warning_message($sender, $title, $message) {
-        $this->show_message($sender, self::MSG_SEVERITY_WARNING, $title, $message);
+    public function show_warning_message($sender, $title, $message, $clear = FALSE, $flush = FALSE) {
+        $this->show_message($sender, self::MSG_SEVERITY_WARNING, $title, $message, $clear, $flush);
     }
     
     /**
@@ -229,9 +233,11 @@ class Client_manager {
      * @param string $sender Originatore
      * @param string $title Titolo dialog
      * @param string $message Messaggio
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
      */
-    public function show_error_message($sender, $title, $message) {
-        $this->show_message($sender, self::MSG_SEVERITY_ERROR, $title, $message);
+    public function show_error_message($sender, $title, $message, $clear = FALSE, $flush = FALSE) {
+        $this->show_message($sender, self::MSG_SEVERITY_ERROR, $title, $message, $clear, $flush);
     }
     
     /**
@@ -240,8 +246,10 @@ class Client_manager {
      * @param string $title Titolo dialog
      * @param string $message Messaggio
      * @param array $buttons Pulsanti
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
      */
-    public function show_question($sender, $title, $message, $buttons) {
+    public function show_question($sender, $title, $message, $buttons, $clear = FALSE, $flush = FALSE) {
         $dialog_info = [
             'view' => [
                 'name' => 'common/common_question_view',
@@ -253,7 +261,7 @@ class Client_manager {
             'title' => $title,
             'modal' => TRUE
         ];
-        $this->load_view_into_dialog($sender, $dialog_info, TRUE, TRUE);
+        $this->load_view_into_dialog($sender, $dialog_info, $clear, $flush);
     }    
     
     /**
@@ -263,7 +271,7 @@ class Client_manager {
      * @param string $title Titolo dialog
      * @param string $message Messaggio
      */
-    private function show_message($sender, $severity, $title, $message) {
+    private function show_message($sender, $severity, $title, $message, $clear = FALSE, $flush = FALSE) {
         $dialog_info = [
             'view' => [
                 'name' => 'common/common_message_view',
@@ -275,7 +283,7 @@ class Client_manager {
             'title' => $title,
             'modal' => TRUE
         ];
-        $this->load_view_into_dialog($sender, $dialog_info, TRUE, TRUE);
+        $this->load_view_into_dialog($sender, $dialog_info, $clear, $flush);
     }
     
     /**

@@ -51,7 +51,9 @@ class LoginAdmin extends CI_Controller {
         if ($toolbar_id !== 'toolbar-add' && (!$decodedInfo->selectedRows)) {
             $this->client_manager->show_error_message($toolbar_id, 
                     $this->lang->line('errore'), 
-                    $this->lang->line('nessuna_riga_selezionata'));
+                    $this->lang->line('nessuna_riga_selezionata'),
+                    TRUE, 
+                    TRUE);
             return;
         }
                 
@@ -81,7 +83,9 @@ class LoginAdmin extends CI_Controller {
                             'text' => $this->lang->line('no'),
                             'clickhandler' => components_get_handler('admin', 'LoginAdmin', 'on_apikeys_question_delete')
                         ]
-                    ]);
+                    ],
+                    TRUE,
+                    TRUE);
                 return;
         }
         
