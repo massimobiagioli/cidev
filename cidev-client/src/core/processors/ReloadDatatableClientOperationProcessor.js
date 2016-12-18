@@ -18,7 +18,10 @@ export default class extends BaseClientOperationProcessor {
             gridObj = $('#' + gridId);
 
         /* Bugfix: dopo la chiamata a reload(), vengono duplicati header, filtri  e paginator */
-        $('#' + gridId + ' > div').remove();
+        $('#' + gridId + ' > div > div.ui-datatable-header').remove();
+        //$('#' + gridId + ' > div > div.ui-datatable-tablewrapper').remove();
+        $('#' + gridId + ' > div > div.ui-datatable-tablewrapper > table > thead > tr.ui-state-default').remove();
+        $('#' + gridId + ' > div > div.ui-paginator').remove();
         
         // Ricarica datatable
         document.getElementById(gridId).reload();
