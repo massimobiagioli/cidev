@@ -104,15 +104,25 @@ class LoginAdmin extends CI_Controller {
         $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
     }
     
-    public function on_apikeys_question_delete($button_id, $info) {
+    public function on_apikeys_question_delete($button_id, $id) {
         
-        // Effettua cancellazione dei dati
+        // Chiude dialog
+        $this->client_manager->close_dialog('toolbar-delete');
+
         if ($button_id === 'btn_yes') {
-            $this->client_manager->console_log($button_id, $info, TRUE, FALSE);
+            
+            // Cancella dati utilizzando il model
+            if ($this->get_model_frontends()->delete($id)) {
+                $this->client_manager->show_info_message($button_id, $this->lang->line('info'), $this->lang->line('operazione_effettuata_con_successo'));                
+            } else {
+                $this->client_manager->show_error_message($button_id, $this->lang->line('errore'), $this->lang->line('errore_cancellazione_elemento'));
+            }
+            
+            // Ricarica datatable
+            $this->client_manager->reload_datatable($button_id, 'grid');
         }
         
-        // Effettua chiusura dialog
-        $this->client_manager->close_dialog('toolbar-delete', FALSE, TRUE);
+        $this->client_manager->flush();
     }
     
     public function on_apikeys_confirm_detail($operation, $button_id) {
@@ -155,6 +165,13 @@ class LoginAdmin extends CI_Controller {
             $data['error_message'] = $this->lang->line('credenziali_errate');
         }
         $this->load->view('login_admin_view', $data);
+    }
+    
+    private function get_model_frontends() {
+        $controller_name = 'Frontends';
+        $model_alias = controller_name_to_model_alias($controller_name);
+        instance_model_by_controller('admin', $controller_name);
+        return $this->$model_alias;
     }
     
 }

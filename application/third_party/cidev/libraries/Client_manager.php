@@ -13,6 +13,7 @@ class Client_manager {
     const OPERATION_CONSOLE_LOG = 'console_log';
     const OPERATION_CREATE_DIALOG_WITH_CONTENT = 'create_dialog_with_content';
     const OPERATION_CLOSE_DIALOG = 'close_dialog';
+    const OPERATION_RELOAD_DATATABLE = 'reload_datatable';
     const OPERATION_SET_DIV_CONTENT = 'set_div_content';
     
     /*
@@ -270,6 +271,8 @@ class Client_manager {
      * @param string $severity Livello messaggio (info/warning/message)
      * @param string $title Titolo dialog
      * @param string $message Messaggio
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
      */
     private function show_message($sender, $severity, $title, $message, $clear = FALSE, $flush = FALSE) {
         $dialog_info = [
@@ -284,6 +287,31 @@ class Client_manager {
             'modal' => TRUE
         ];
         $this->load_view_into_dialog($sender, $dialog_info, $clear, $flush);
+    }
+    
+    /**
+     * Ricarica Datatable
+     * @param string $sender Originatore
+     * @param string $datatable_id Id datatable
+     * @param boolean $clear TRUE svuota operazioni client, FALSE aggiunge operazione alla lista esistente
+     * @param boolean $flush TRUE effettua la flush immediata, FALSE non effettua la flush
+     */
+    public function reload_datatable($sender, $datatable_id, $clear = FALSE, $flush = FALSE) {
+        
+        // Controlla svuotamento operazioni client
+        if ($clear) {
+            $this->clear_client_operations();
+        }
+        
+        // Aggiunge operazione client specifica
+        $this->add_client_operation(self::OPERATION_RELOAD_DATATABLE, $sender, [
+            'target' => $datatable_id
+        ]);
+        
+        // Controlla se deve fare la flush immediata
+        if ($flush) {
+            $this->flush();
+        }
     }
     
     /**

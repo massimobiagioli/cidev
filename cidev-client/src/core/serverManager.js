@@ -2,6 +2,7 @@ import ChangeViewClientOperationProcessor from './processors/ChangeViewClientOpe
 import ConsoleLogClientOperationProcessor from './processors/ConsoleLogClientOperationProcessor'
 import CreateDialogWithContentClientOperationProcessor from './processors/CreateDialogWithContentClientOperationProcessor'
 import CloseDialogClientOperationProcessor from './processors/CloseDialogClientOperationProcessor'
+import ReloadDatatableClientOperationProcessor from './processors/ReloadDatatableClientOperationProcessor'
 import SetDivContentClientOperationProcessor from './processors/SetDivContentClientOperationProcessor'
 
 /**
@@ -40,6 +41,7 @@ class ServerManager {
         this.clientOperationProcessorMap.set('console_log', new ConsoleLogClientOperationProcessor());
         this.clientOperationProcessorMap.set('create_dialog_with_content', new CreateDialogWithContentClientOperationProcessor());
         this.clientOperationProcessorMap.set('close_dialog', new CloseDialogClientOperationProcessor());
+        this.clientOperationProcessorMap.set('reload_datatable', new ReloadDatatableClientOperationProcessor());
         this.clientOperationProcessorMap.set('set_div_content', new SetDivContentClientOperationProcessor());
     }
 

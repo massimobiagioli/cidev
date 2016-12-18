@@ -8,7 +8,7 @@ define("CRUD_MODEL_GENERIC", "CRUD_model");
 
 if (!function_exists('instance_model_by_controller')) {
     /**
-     * Istanzia model a partire dal nome della tabella fisica
+     * Istanzia model a partire dal nome del controller
      * @param string $module_name Nome modulo
      * @param string $controller_name Nome controller
      */
