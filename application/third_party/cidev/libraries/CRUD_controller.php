@@ -127,7 +127,7 @@ class CRUD_controller extends Base_controller {
         
         // Effettua conteggio elementi da model
         $result = $this->get_model()->count_query($query_data);
-        if (!$result) {
+        if ($result === FALSE) {
             $this->handle_internal_error();
             die();
         }
@@ -163,7 +163,7 @@ class CRUD_controller extends Base_controller {
         
         // Effettua caricamento elementi da model
         $result = $this->get_model()->query($query_data);
-        if (!$result) {
+        if ($result === FALSE) {
             $this->handle_internal_error();
             die();
         }
@@ -200,7 +200,7 @@ class CRUD_controller extends Base_controller {
         
         // Effettua inserimento di un nuovo elemento da model
         $inserted = $this->get_model()->insert($to_insert);
-        if (!$inserted) {
+        if ($inserted === FALSE) {
             $this->handle_internal_error();
             die();
         }
@@ -238,7 +238,7 @@ class CRUD_controller extends Base_controller {
         
         // Effettua aggiornamento elemento da model
         $updated = $this->get_model()->update($id, $to_update);
-        if (!$updated) {
+        if ($updated === FALSE) {
             $this->handle_internal_error();
             die();
         }
@@ -269,7 +269,7 @@ class CRUD_controller extends Base_controller {
         
         // Effettua cancellazione elemento da model
         $deleted = $this->get_model()->delete($id);
-        if (!$deleted) {
+        if ($deleted === FALSE) {
             $this->handle_internal_error();
             die();
         }

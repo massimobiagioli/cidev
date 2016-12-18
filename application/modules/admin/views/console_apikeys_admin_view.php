@@ -24,7 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <p-datatable id="grid" datasource="<?=base_url('admin/Frontends/query/' . $filters)?>" 
                          paginator rows="10" 
                          selectionmode="single" 
-                         caption="<?=$this->lang->line('gestione_api_keys')?>">
+                         caption="<?=$this->lang->line('gestione_api_keys')?>"
+                         emptyMessage="<?=$this->lang->line('nessun_elemento_trovato')?>">
                 <p-column field="fen_id" headertext="<?=$this->lang->line('caption_ID')?>" sortable filter></p-column>
                 <p-column field="fen_name" headertext="<?=$this->lang->line('caption_nome')?>" sortable filter></p-column>
                 <p-column field="fen_api_key" headertext="<?=$this->lang->line('caption_api_key')?>" sortable filter></p-column>

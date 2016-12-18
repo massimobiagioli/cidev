@@ -23,6 +23,7 @@ $lang['gestione_api_keys'] = 'Gestione API keys';
 $lang['info'] = 'Info';
 $lang['inserisci_credenziali'] = 'Inserisci credenziali';
 $lang['modifica'] = 'Modifica';
+$lang['nessun_elemento_trovato'] = 'Nessun elemento trovato';
 $lang['no'] = 'No';
 $lang['nome'] = 'Nome';
 $lang['operazione_effettuata_con_successo'] = 'Operazione effettuata con successo';
