@@ -25,8 +25,8 @@ let createNestedElementDom = function(tag, element, id, buttonClickHandler, link
             // Gestione click su pulsante
             if (buttonClickHandler) {
                 buttonDom.on('click', function(e) {
-                    let info = encodeURIComponent(btoa(JSON.stringify(store.getState().grids[linkedGrid])));
-                    serverManager.invokeActionController(buttonClickHandler + '/' + $(e.currentTarget).data('buttonId') + '/' + info);
+                    let encodedInfo = encodeURIComponent(btoa(JSON.stringify(store.getState().grids[linkedGrid])));
+                    serverManager.invokeActionController(buttonClickHandler + '/' + $(e.currentTarget).data('buttonId') + '/' + encodedInfo);
                 });
             }
 

@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Controller Console di Amministrazione
+ */
 class LoginAdmin extends CI_Controller {
     
     const OPERATION_INSERT = 'insert';
@@ -45,10 +48,10 @@ class LoginAdmin extends CI_Controller {
     public function on_apikeys_toolbar_click($toolbar_id, $info) {
                
         // Decodifica info passate dal componente
-        $decodedInfo = component_decode_info($info);
+        $decoded_info = component_decode_info($info);
         
         // Se operazione dipende dalla riga, e nessuna riga selezionata, mostra messaggio di errore
-        if ($toolbar_id !== 'toolbar-add' && (!$decodedInfo->selectedRows)) {
+        if ($toolbar_id !== 'toolbar-add' && (!$decoded_info->selectedRows)) {
             $this->client_manager->show_error_message($toolbar_id, 
                     $this->lang->line('errore'), 
                     $this->lang->line('nessuna_riga_selezionata'),
@@ -61,22 +64,24 @@ class LoginAdmin extends CI_Controller {
             case 'toolbar-add':
                 $title_lang_key = 'aggiungi';
                 $operation = self::OPERATION_INSERT;
+                $row = null;
                 break;
             case 'toolbar-edit':
                 $title_lang_key = 'modifica';
                 $operation = self::OPERATION_UPDATE;
+                $row = count($decoded_info->selectedRows) > 0 ? $decoded_info->selectedRows[0] : null;
                 break;
             case 'toolbar-delete':
                 $this->client_manager->show_question($toolbar_id, 
                     $this->lang->line('conferma_cancellazione'), 
                     sprintf($this->lang->line('cancellare_elemento'), 
-                    $decodedInfo->selectedRows[0]->fen_id . ' - ' . $decodedInfo->selectedRows[0]->fen_name),
+                    $decoded_info->selectedRows[0]->fen_id . ' - ' . $decoded_info->selectedRows[0]->fen_name),
                     [
                         [
                             'id' => 'btn_yes',
                             'text' => $this->lang->line('si'),
                             'clickhandler' => components_get_handler('admin', 'LoginAdmin', 'on_apikeys_question_delete'),
-                            'info' => $decodedInfo->selectedRows[0]->fen_id
+                            'info' => $decoded_info->selectedRows[0]->fen_id
                         ],
                         [
                             'id' => 'btn_no',
@@ -93,14 +98,15 @@ class LoginAdmin extends CI_Controller {
             'view' => [
                 'name' => 'console_apikey_detail_admin_view',
                 'data' => [
-                    'info' => $decodedInfo,
-                    'operation' => $operation
+                    'operation' => $operation,
+                    'info' => $row
                 ]
             ],
             'title' => $this->lang->line($title_lang_key) . ' ' . $this->lang->line('api_key'),
             'modal' => TRUE,
             'width' => 600
         ];
+            
         $this->client_manager->load_view_into_dialog($toolbar_id, $dialog_info, TRUE, TRUE);
     }
     
@@ -125,23 +131,41 @@ class LoginAdmin extends CI_Controller {
         $this->client_manager->flush();
     }
     
-    public function on_apikeys_confirm_detail($operation, $button_id) {
+    public function on_apikeys_confirm_detail($operation, $button_id, $info) {
         
-        // Effettua salvataggio dei dati
-        if ($button_id === 'btn_confirm') {
-            // TODO
-        }
+        // Decodifica info passate dal componente
+        $decoded_info = component_decode_info($info);
         
-        // Chiusura dialog
+        // Controlla tipo operazione
         switch ($operation) {
             case self::OPERATION_INSERT:
                 $dialogName = 'toolbar-add';
+                $method = 'insert';
+                $method_params = [$decoded_info];
                 break;
             case self::OPERATION_UPDATE:
                 $dialogName = 'toolbar-edit';
+                $method = 'update';
+                $method_params = [$decoded_info->fen_id, $decoded_info];
                 break;
         }
-        $this->client_manager->close_dialog($dialogName, TRUE, TRUE);
+                
+        // Effettua salvataggio dei dati 
+        if ($button_id === 'btn_confirm') {
+            
+            // Cancella dati utilizzando il model
+            if (call_user_func([$this->get_model_frontends(), $method], $method_params)) {
+                $this->client_manager->show_info_message($button_id, $this->lang->line('info'), $this->lang->line('operazione_effettuata_con_successo'));                
+            } else {
+                $this->client_manager->show_error_message($button_id, $this->lang->line('errore'), $this->lang->line('errore_cancellazione_elemento'));
+            }
+            
+            // Ricarica datatable
+            $this->client_manager->reload_datatable($button_id, 'grid');
+        }
+                        
+        // Chiude dialog
+        $this->client_manager->close_dialog($dialogName, FALSE, TRUE);
     }
     
     private function init_apikeys_querydata_filters() {

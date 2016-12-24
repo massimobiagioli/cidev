@@ -18,6 +18,9 @@ if (!function_exists('component_decode_info')) {
      * @return string informazioni decodificate
      */
     function component_decode_info($info) {
+        if ($info === '_') {
+            return null;
+        }
         return json_decode(base64_decode(urldecode($info)));
     }    
 }

@@ -1,4 +1,5 @@
 import { serverManager } from '../core/serverManager'
+import _ from 'underscore'
 
 // Elabora pulsanti
 let processButtonContainer = function(tag, childTagSubChildren, operation) {
@@ -15,12 +16,37 @@ let processButtonContainer = function(tag, childTagSubChildren, operation) {
                 if (childSubId === 'btn_confirm') {
                     $('#detail_form').validate();
                     if ($('#detail_form').valid()) {
-                        serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId);
+
+                        // Mappa tutti i controlli di tipo checkbox
+                        let checkboxArray = $("input:checkbox").map(function(x) {
+                            return {
+                                name: $(this).get(0).id,
+                                value: $(this).is(":checked")
+                            }
+                        }).get();
+                        
+                        // Serializza form
+                        let serializedForm = $('#detail_form').serializeArray().reduce(function(a, x) { 
+                            let i = _.findIndex(checkboxArray, { name: x.name });
+                            if (i != -1) {
+                                a[x.name] = checkboxArray[i].value; 
+                            } else {
+                                a[x.name] = x.value; 
+                            }
+                            return a; 
+                        }, {});
+                        
+                        console.log(serializedForm);
+
+                        let encodedInfo = encodeURIComponent(btoa(JSON.stringify(serializedForm)));
+
+                        // Effettua chiamata al server
+                        serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId + '/' + encodedInfo);
                     } else {
                         return;
                     }
                 } else {
-                    serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId);
+                    serverManager.invokeActionController(buttonClickHandler + '/' + operation + '/' + childSubId + '/_');
                 }
                 
             });
