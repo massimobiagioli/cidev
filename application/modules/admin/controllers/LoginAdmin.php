@@ -154,7 +154,7 @@ class LoginAdmin extends CI_Controller {
         if ($button_id === 'btn_confirm') {
             
             // Cancella dati utilizzando il model
-            if (call_user_func([$this->get_model_frontends(), $method], $method_params)) {
+            if (call_user_func_array([$this->get_model_frontends(), $method], $method_params)) {
                 $this->client_manager->show_info_message($button_id, $this->lang->line('info'), $this->lang->line('operazione_effettuata_con_successo'));                
             } else {
                 $this->client_manager->show_error_message($button_id, $this->lang->line('errore'), $this->lang->line('errore_cancellazione_elemento'));
