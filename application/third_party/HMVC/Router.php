@@ -122,6 +122,13 @@ class HMVC_Router extends CI_Router {
      * @return	void
      */
     function _parse_routes() {
+        
+        // PHPUnit
+        if (ENVIRONMENT === 'testing') {
+            $this->set_class('Phpunit');
+            return;
+        }
+        
         // Apply the current module's routing config
 
         // CI v3.x has URI starting at segment 1
