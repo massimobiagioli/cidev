@@ -12,7 +12,7 @@ export default class extends BaseClientOperationProcessor {
     process(operation) {
         super.process(operation);
         let dialogId = 'dlg_' + operation.sender;
-        $('#' + dialogId).puidialog('hide');
+        $('#' + dialogId).remove();
     }
 
 }
