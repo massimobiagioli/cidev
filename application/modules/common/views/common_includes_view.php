@@ -1,7 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-$CI =& get_instance();
 ?>
 <link rel="stylesheet" href="<?php echo assets_primeui_theme_css_url(); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo assets_font_awesome_css_url(); ?>" />
@@ -19,27 +17,28 @@ $CI =& get_instance();
 <!-- jQuery validation custom messages -->
 <script>
 jQuery.extend(jQuery.validator.messages, {
-    required: "<?=$CI->lang->line('validation_required')?>",
-    remote: "<?=$CI->lang->line('validation_remote')?>",
-    email: "<?=$CI->lang->line('validation_email')?>",
-    url: "<?=$CI->lang->line('validation_url')?>",
-    date: "<?=$CI->lang->line('validation_date')?>",
-    dateISO: "<?=$CI->lang->line('validation_dateISO')?>",
-    number: "<?=$CI->lang->line('validation_number')?>",
-    digits: "<?=$CI->lang->line('validation_digits')?>",
-    creditcard: "<?=$CI->lang->line('validation_rcreditcard')?>",
-    equalTo: "<?=$CI->lang->line('validation_equalTo')?>",
-    accept: "<?=$CI->lang->line('validation_accept')?>",
-    maxlength: jQuery.validator.format("<?=$CI->lang->line('validation_maxlength_format')?>"),
-    minlength: jQuery.validator.format("<?=$CI->lang->line('validation_minlength_format')?>"),
-    rangelength: jQuery.validator.format("<?=$CI->lang->line('validation_rangelength_format')?>"),
-    range: jQuery.validator.format("<?=$CI->lang->line('validation_range_format')?>"),
-    max: jQuery.validator.format("<?=$CI->lang->line('validation_max_format')?>"),
-    min: jQuery.validator.format("<?=$CI->lang->line('validation_min_format')?>")
+    required: "<?=$this->lang->line('validation_required')?>",
+    remote: "<?=$this->lang->line('validation_remote')?>",
+    email: "<?=$this->lang->line('validation_email')?>",
+    url: "<?=$this->lang->line('validation_url')?>",
+    date: "<?=$this->lang->line('validation_date')?>",
+    dateISO: "<?=$this->lang->line('validation_dateISO')?>",
+    number: "<?=$this->lang->line('validation_number')?>",
+    digits: "<?=$this->lang->line('validation_digits')?>",
+    creditcard: "<?=$this->lang->line('validation_rcreditcard')?>",
+    equalTo: "<?=$this->lang->line('validation_equalTo')?>",
+    accept: "<?=$this->lang->line('validation_accept')?>",
+    maxlength: jQuery.validator.format("<?=$this->lang->line('validation_maxlength_format')?>"),
+    minlength: jQuery.validator.format("<?=$this->lang->line('validation_minlength_format')?>"),
+    rangelength: jQuery.validator.format("<?=$this->lang->line('validation_rangelength_format')?>"),
+    range: jQuery.validator.format("<?=$this->lang->line('validation_range_format')?>"),
+    max: jQuery.validator.format("<?=$this->lang->line('validation_max_format')?>"),
+    min: jQuery.validator.format("<?=$this->lang->line('validation_min_format')?>")
 });
 </script>
 
 <?php 
+$CI =& get_instance();
 if ($CI->config->item('csrf_protection')): 
 ?>
 <script>

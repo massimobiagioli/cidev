@@ -43,4 +43,6 @@ $config['controllers_assoc'] = array();
 |--------------------------------------------------------------------------
  */
 $config['default_query_limit'] = 10;
-$config['models_query_limit'] = array();
+$config['models_query_limit'] = array(
+    'frontends' => 999
+);
