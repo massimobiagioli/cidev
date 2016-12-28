@@ -141,13 +141,17 @@ class LoginAdmin extends CI_Controller {
         switch ($operation) {
             case self::OPERATION_INSERT:
                 $dialogName = 'toolbar-add';
-                $method = 'insert';
-                $method_params = [$decoded_info];
+                if ($button_id === 'btn_confirm') {
+                    $method = 'insert';
+                    $method_params = [$decoded_info];
+                }
                 break;
             case self::OPERATION_UPDATE:
                 $dialogName = 'toolbar-edit';
-                $method = 'update';
-                $method_params = [$decoded_info->fen_id, $decoded_info];
+                if ($button_id === 'btn_confirm') {
+                    $method = 'update';
+                    $method_params = [$decoded_info->fen_id, $decoded_info];
+                }
                 break;
         }
                 

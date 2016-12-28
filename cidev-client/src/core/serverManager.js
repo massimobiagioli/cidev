@@ -27,7 +27,7 @@ class ServerManager {
                 $this._handleActionControllerResponse(data);
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
+                console.error(xhr.status);
             }
         });
     }

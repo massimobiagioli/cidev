@@ -22,13 +22,13 @@ let processButtonContainer = function(tag, childTagSubChildren, operation) {
                             return {
                                 name: $(this).get(0).id,
                                 value: $(this).is(":checked")
-                            }
+                            };
                         }).get();
                         
                         // Serializza form
                         let serializedForm = $('#detail_form').serializeArray().reduce(function(a, x) { 
                             let i = _.findIndex(checkboxArray, { name: x.name });
-                            if (i != -1) {
+                            if (i !== -1) {
                                 a[x.name] = checkboxArray[i].value; 
                             } else {
                                 a[x.name] = x.value; 
@@ -36,8 +36,6 @@ let processButtonContainer = function(tag, childTagSubChildren, operation) {
                             return a; 
                         }, {});
                         
-                        console.log(serializedForm);
-
                         let encodedInfo = encodeURIComponent(btoa(JSON.stringify(serializedForm)));
 
                         // Effettua chiamata al server
@@ -52,7 +50,7 @@ let processButtonContainer = function(tag, childTagSubChildren, operation) {
             });
         }    
     }
-}
+};
 
 // Elabora elementi
 let processChildren = function(tag, element, id, operation) {
@@ -73,7 +71,7 @@ let processChildren = function(tag, element, id, operation) {
 
         element.append(children);
     }
-}
+};
 
 if(!xtag.tags['cd-form-wrapper']) {
     xtag.register('cd-form-wrapper', {
