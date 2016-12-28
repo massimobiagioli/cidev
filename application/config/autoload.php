@@ -117,7 +117,7 @@ $autoload['config'] = array('cidev', 'models');
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] = array('error_messages', 'labels');
+$autoload['language'] = array('error_messages', 'validation_messages', 'labels');
 
 /*
 | -------------------------------------------------------------------
