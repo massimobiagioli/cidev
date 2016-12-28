@@ -71,6 +71,9 @@ class LoginAdmin extends CI_Controller {
                 $title_lang_key = 'modifica';
                 $operation = self::OPERATION_UPDATE;
                 $row = count($decoded_info->selectedRows) > 0 ? $decoded_info->selectedRows[0] : null;
+                if ($row) {
+                    $row = $this->get_model_frontends()->load($row->fen_id);
+                }
                 break;
             case 'toolbar-delete':
                 $this->client_manager->show_question($toolbar_id, 
