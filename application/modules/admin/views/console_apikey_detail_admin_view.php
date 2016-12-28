@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             <!-- Id -->
             <input type="hidden" id="fen_id" name="fen_id"
-                   value="<?=($info ? $info->fen_id : 0)?>"/>
+                   value="<?=($info && property_exists($info, 'fen_id') ? $info->fen_id : 0)?>"/>
             
             <!-- Nome -->
             <div class="ui-grid-row" style="margin-bottom: 5px;">
@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="ui-grid-col-10">
                     <input type="text" is="p-inputtext" id="fen_name" name="fen_name" size="55" 
-                           value="<?=($info ? $info->fen_name : '')?>" required autofocus/>
+                           value="<?=($info && property_exists($info, 'fen_name') ? $info->fen_name : '')?>" required autofocus/>
                 </div>
             </div>
             
@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="ui-grid-col-10">
                     <input type="text" is="p-inputtext" id="fen_api_key" name="fen_api_key" size="55" 
-                           value="<?=($info ? $info->fen_api_key : '')?>" required/>
+                           value="<?=($info && property_exists($info, 'fen_api_key') ? $info->fen_api_key : '')?>" required readonly/>
                 </div>
             </div>
             
@@ -38,8 +38,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="ui-grid-col-10">
                     <input type="checkbox" is="p-checkbox" id="fen_disabled" name="fen_disabled" 
-                           value="<?=($info ? $info->fen_disabled : '')?>"
-                           <?php if ($info && $info->fen_disabled): ?>checked<?php endif;?>/>
+                           value="<?=($info && property_exists($info, 'fen_disabled') ? $info->fen_disabled : '0')?>"
+                           <?php if ($info && property_exists($info, 'fen_disabled') && $info->fen_disabled): ?>checked<?php endif;?>/>
                 </div>
             </div>
         </div>  

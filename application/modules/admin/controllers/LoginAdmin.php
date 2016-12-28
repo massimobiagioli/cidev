@@ -64,7 +64,8 @@ class LoginAdmin extends CI_Controller {
             case 'toolbar-add':
                 $title_lang_key = 'aggiungi';
                 $operation = self::OPERATION_INSERT;
-                $row = null;
+                $row = new stdClass();
+                $row->fen_api_key = generate_uuid();
                 break;
             case 'toolbar-edit':
                 $title_lang_key = 'modifica';
