@@ -98,7 +98,7 @@ class CRUD_controller extends Base_controller {
         // Effettua caricamento elemento da model
         $row = $this->get_model()->load($id);
         if (!$row) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore chiamata a metodo load - chiave: ' . $id);
             die();
         }
         
@@ -121,14 +121,14 @@ class CRUD_controller extends Base_controller {
         // Parsing dei parametri in ingresso
         $query_data = $this->parse_query_filters($filters);
         if ($query_data == null) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore parsing query_data - metodo count_query');
             die();
         }
         
         // Effettua conteggio elementi da model
         $result = $this->get_model()->count_query($query_data);
         if ($result === FALSE) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore chiamata a metodo count_query');
             die();
         }
         
@@ -155,7 +155,7 @@ class CRUD_controller extends Base_controller {
         // Popola QueryData dai filtri
         $query_data = $this->parse_query_filters($filters);
         if ($query_data == null) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore parsing query_data - metodo query');
             die();
         }            
         
@@ -164,7 +164,7 @@ class CRUD_controller extends Base_controller {
         // Effettua caricamento elementi da model
         $result = $this->get_model()->query($query_data);
         if ($result === FALSE) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore chiamata a metodo query');
             die();
         }
         
@@ -192,7 +192,7 @@ class CRUD_controller extends Base_controller {
         // Lettura dati da inserire
         $to_insert = $this->parse_input_data();
         if (!$to_insert) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore parsing input data - metodo insert');
             die();
         }
         
@@ -201,7 +201,7 @@ class CRUD_controller extends Base_controller {
         // Effettua inserimento di un nuovo elemento da model
         $inserted = $this->get_model()->insert($to_insert);
         if ($inserted === FALSE) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore chiamata a metodo insert - dati: ' . json_encode($to_insert));
             die();
         }
         
@@ -230,7 +230,7 @@ class CRUD_controller extends Base_controller {
         // Lettura dati da inserire
         $to_update = $this->parse_input_data();
         if (!$to_update) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore parsing input data - metodo update');
             die();
         }
         
@@ -239,7 +239,7 @@ class CRUD_controller extends Base_controller {
         // Effettua aggiornamento elemento da model
         $updated = $this->get_model()->update($id, $to_update);
         if ($updated === FALSE) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore chiamata a metodo update - dati: ' . json_encode($to_insert));
             die();
         }
         
@@ -270,7 +270,7 @@ class CRUD_controller extends Base_controller {
         // Effettua cancellazione elemento da model
         $deleted = $this->get_model()->delete($id);
         if ($deleted === FALSE) {
-            $this->handle_internal_error();
+            $this->handle_internal_error('Errore chiamata a metodo delete - chiave: ' . $id);
             die();
         }
         
@@ -297,7 +297,10 @@ class CRUD_controller extends Base_controller {
         $this->output->set_status_header('401');
     }
     
-    private function handle_internal_error() {
+    private function handle_internal_error($error_msg = NULL) {
+        if ($error_msg) {
+            log_message('error', $error_msg);
+        }
         $this->output->set_status_header('500');
     }
     

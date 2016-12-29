@@ -25,18 +25,22 @@ class Base_controller extends CI_Controller {
         // Se non superato il controllo precedente, effettua il controllo autorizzazione
         // attraverso il token passato nell'header, generato attraverso API-KEY
         if (!array_key_exists(HEADER_API_TOKEN, $this->input->request_headers())) {
+            log_message('error', 'Chiave ' . HEADER_API_TOKEN . ' non valorizzata nell\'header');
             return FALSE;
         } 
         $api_key_alias = $this->input->request_headers()[HEADER_API_KEY_ALIAS];
         if (!$api_key_alias) {
+            log_message('error', 'Chiave ' . HEADER_API_KEY_ALIAS . ' non valorizzata nell\'header');
             return FALSE;
         }
         $api_ts = $this->input->request_headers()[HEADER_API_TS];
         if (!$api_ts) {
+            log_message('error', 'Chiave ' . HEADER_API_TS . ' non valorizzata nell\'header');
             return FALSE;
         }
         $token = $this->input->request_headers()[HEADER_API_TOKEN];
         if (!$token) {
+            log_message('error', 'Chiave ' . HEADER_API_TOKEN . ' non valorizzata nell\'header');
             return FALSE;
         }
         
@@ -47,12 +51,14 @@ class Base_controller extends CI_Controller {
     private function validate_token($api_key_alias, $token, $api_ts) {
         // Controlla se la richiesta è scaduta
         if (!$this->check_ts($api_ts)) {
+            log_message('error', 'Errore validazione token: richiesta scaduta');
             return FALSE;
         }
         
         // Carica informazioni del frontend
         $frontend = $this->load_frontend_info($api_key_alias);
         if (!$frontend) {
+            log_message('error', 'Errore validazione token: errore caricamento dati frontend');
             return FALSE;
         }
         
