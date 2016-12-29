@@ -161,3 +161,35 @@ if (!function_exists('query_limit_model')) {
         return $CI->config->item('default_query_limit');
     }
 }
+
+if (!function_exists('new_query_data')) {
+    /**
+     * Restituisce nuovo oggetto QueryData
+     * @return \stdClass
+     */
+    function new_query_data() {
+        $query_data = new stdClass();
+        $query_data->limit = 1;
+        $query_data->offset = 0;
+        $query_data->filters = [];
+        $query_data->sort = [];
+        return $query_data;
+    }
+}
+
+if (!function_exists('new_query_data_filter')) {
+    /**
+     * Crea nuovo oggetto filtro per struttura QueryData
+     * @param string $name Nome
+     * @param string $operator Operatore
+     * @param string $value Valore
+     * @return \stdClass Oggetto filtro
+     */
+    function new_query_data_filter($name, $operator, $value) {
+        $filter = new stdClass();
+        $filter->name = $name;
+        $filter->operator = $operator;
+        $filter->value = $value;
+        return $filter;
+    }
+}

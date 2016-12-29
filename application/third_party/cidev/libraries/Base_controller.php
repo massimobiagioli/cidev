@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 define('HEADER_API_TOKEN', 'X-CI-API-TOKEN');
+define('HEADER_API_KEY_ALIAS', 'X-CI-API-KEY-ALIAS');
+define('HEADER_API_TS', 'X-CI-API-TS');
 
 /**
  * Base Controller - Superclass
@@ -25,17 +27,61 @@ class Base_controller extends CI_Controller {
         if (!array_key_exists(HEADER_API_TOKEN, $this->input->request_headers())) {
             return FALSE;
         } 
+        $api_key_alias = $this->input->request_headers()[HEADER_API_KEY_ALIAS];
+        if (!$api_key_alias) {
+            return FALSE;
+        }
+        $api_ts = $this->input->request_headers()[HEADER_API_TS];
+        if (!$api_ts) {
+            return FALSE;
+        }
         $token = $this->input->request_headers()[HEADER_API_TOKEN];
         if (!$token) {
             return FALSE;
         }
         
-        //TODO: completare
-        if ($token !== 'DUMMY_TOKEN') {
+        // Validazione token
+        return $this->validate_token($api_key_alias, $token, $api_ts);
+    }
+    
+    private function validate_token($api_key_alias, $token, $api_ts) {
+        // Controlla se la richiesta è scaduta
+        if (!$this->check_ts($api_ts)) {
             return FALSE;
         }
         
-        return TRUE;
+        // Carica informazioni del frontend
+        $frontend = $this->load_frontend_info($api_key_alias);
+        if (!$frontend) {
+            return FALSE;
+        }
+        
+        // Confronta token passato nell'header della richiesta con quello generato dal server
+        $generated_token = $this->generate_token($frontend, $api_ts);
+        return $generated_token === $token;
+    }
+    
+    private function check_ts($api_ts) {
+        $request_time = $_SERVER['REQUEST_TIME'];
+        $minutes = round(abs($request_time - $api_ts) / 60,2);
+        return ($minutes <= 1);
+    }
+    
+    private function load_frontend_info($api_key_alias) {
+        instance_model_by_controller('admin', 'Frontends');
+        $query_data = new_query_data();
+        $filter = new_query_data_filter('fen_name', '=', $api_key_alias);
+        $query_data->filters[] = $filter;
+        $result = $this->frontends->query($query_data);
+        if ($result) {
+            return $result[0];
+        } else {
+            return FALSE;
+        }
+    }
+    
+    private function generate_token($frontend, $ts) {
+        return md5($ts . md5($frontend->fen_name . md5($frontend->fen_api_key)));
     }
     
 }
