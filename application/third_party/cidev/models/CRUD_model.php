@@ -123,6 +123,11 @@ class CRUD_Model extends CI_Model {
     protected function post_insert($data, &$result) {
     }
     
+    private function validation_insert($data) {
+        //TODO: completare
+        return TRUE;
+    }
+    
     /**
      * Inserimento di un record sul database
      * @param object $data Dati da inserire
@@ -134,6 +139,12 @@ class CRUD_Model extends CI_Model {
             
             $this->pre_insert($data);
             
+            // Validazione
+            if (!$this->validation_insert($data)) {
+                return FALSE;
+            }
+            
+            // Inserimento
             $this->get_module_db()->insert($this->table_name, $data);
             $id = $this->get_module_db()->insert_id();
             $result = $this->transform_result_row($this->load($id));
@@ -155,6 +166,11 @@ class CRUD_Model extends CI_Model {
     protected function post_update($id, $data, &$result) {
     }
     
+    private function validation_update($data) {
+        //TODO: completare
+        return TRUE;
+    }
+    
     /**
      * Aggiornamento di un record sul database
      * @param object $id ID del record da aggiornare
@@ -167,6 +183,12 @@ class CRUD_Model extends CI_Model {
             
             $this->pre_update($id, $data);
             
+            // Validazione
+            if (!$this->validation_update($data)) {
+                return FALSE;
+            }
+            
+            // Aggiornamento
             $this->get_module_db()->where($this->pks[0], $id);
             $this->get_module_db()->update($this->table_name, $data);                                    
             $result = $this->transform_result_row($this->load($id));  
@@ -188,6 +210,11 @@ class CRUD_Model extends CI_Model {
     protected function post_delete($id, &$result) {
     }
     
+    private function validation_delete($data) {
+        //TODO: completare
+        return TRUE;
+    }
+    
     /**
      * Cancellazione di un record sul database
      * @param object $id ID del record da cancellare
@@ -198,8 +225,20 @@ class CRUD_Model extends CI_Model {
             $this->get_module_db()->trans_start();
             
             $this->pre_delete($id);
-            
+                        
+            // Caricamento dati
             $row = $this->load($id);
+            if (!$row) {
+                log_message('error', 'Errore chiamata a metodo load - tabella: ' . $this->table_name . ' - chiave: ' . $id);
+                return FALSE;
+            }
+            
+            // Validazione
+            if (!$this->validation_delete($data)) {
+                return FALSE;
+            }
+            
+            // Cancellazione
             $this->get_module_db()->delete($this->table_name, array($this->pks[0] => $id)); 
             $result = $this->transform_result_row($row);
             
