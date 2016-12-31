@@ -6,9 +6,13 @@ define('HEADER_API_KEY_ALIAS', 'X-CI-API-KEY-ALIAS');
 define('HEADER_API_TS', 'X-CI-API-TS');
 
 /**
- * Base Controller - Superclass
+ * Base Auth Controller - Superclass
  */
-class Base_controller extends CI_Controller {
+class Base_auth_controller extends CRUD_base_controller {
+    
+    public function __construct() {
+        parent::__construct();
+    }
     
     /**
      * Effettua controllo autenticazione API/csrf token

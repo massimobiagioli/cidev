@@ -4,16 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * CRUD Controller - Superclass
  */
-class CRUD_controller extends Base_controller {
-    
-    private $module_name;
-    private $controller_name;
-    private $model_alias;
+class CRUD_controller extends Base_auth_controller {
     
     public function __construct() {
         parent::__construct();
         $this->init_vars();
-        $this->load_cache_driver();
         $this->authenticate_cors();
         $this->load_models();
     }
@@ -54,13 +49,6 @@ class CRUD_controller extends Base_controller {
     }
     
     /*
-     * Carica driver della cache, in funzione del file di configurazione
-     */
-    private function load_cache_driver() {
-        $this->load->driver('cache', $this->config->item('cidev_cache'));
-    }
-    
-    /*
      * Impostazioni CORS, in funzione del file di configurazione
      */
     private function authenticate_cors() {
@@ -98,7 +86,7 @@ class CRUD_controller extends Base_controller {
         // Effettua caricamento elemento da model
         $row = $this->get_model()->load($id);
         if (!$row) {
-            $this->handle_internal_error('Errore chiamata a metodo load - model: ' . $this->model_alias . ' - chiave: ' . $id);
+            $this->handle_internal_error('Errore chiamata a metodo load - model: ' . $this->get_module_name() . '::' . $this->get_model_alias() . ' - chiave: ' . $id);
             die();
         }
         
@@ -121,14 +109,14 @@ class CRUD_controller extends Base_controller {
         // Parsing dei parametri in ingresso
         $query_data = $this->parse_query_filters($filters);
         if ($query_data == null) {
-            $this->handle_internal_error('Errore parsing query_data - metodo count_query - model: ' . $this->model_alias);
+            $this->handle_internal_error('Errore parsing query_data - metodo count_query - model: ' . $this->get_module_name() . '::' . $this->get_model_alias());
             die();
         }
         
         // Effettua conteggio elementi da model
         $result = $this->get_model()->count_query($query_data);
         if ($result === FALSE) {
-            $this->handle_internal_error('Errore chiamata a metodo count_query - model: ' . $this->model_alias);
+            $this->handle_internal_error('Errore chiamata a metodo count_query - model: ' . $this->get_module_name() . '::' . $this->get_model_alias());
             die();
         }
         
@@ -155,7 +143,7 @@ class CRUD_controller extends Base_controller {
         // Popola QueryData dai filtri
         $query_data = $this->parse_query_filters($filters);
         if ($query_data == null) {
-            $this->handle_internal_error('Errore parsing query_data - metodo query - model: ' . $this->model_alias);
+            $this->handle_internal_error('Errore parsing query_data - metodo query - model: ' . $this->get_module_name() . '::' . $this->get_model_alias());
             die();
         }            
         
@@ -164,7 +152,7 @@ class CRUD_controller extends Base_controller {
         // Effettua caricamento elementi da model
         $result = $this->get_model()->query($query_data);
         if ($result === FALSE) {
-            $this->handle_internal_error('Errore chiamata a metodo query - model: ' . $this->model_alias);
+            $this->handle_internal_error('Errore chiamata a metodo query - model: ' . $this->get_module_name() . '::' . $this->get_model_alias());
             die();
         }
         
@@ -192,7 +180,7 @@ class CRUD_controller extends Base_controller {
         // Lettura dati da inserire
         $to_insert = $this->parse_input_data();
         if (!$to_insert) {
-            $this->handle_internal_error('Errore parsing input data - metodo insert - model: ' . $this->model_alias);
+            $this->handle_internal_error('Errore parsing input data - metodo insert - model: ' . $this->get_module_name() . '::' . $this->get_model_alias());
             die();
         }
         
@@ -201,7 +189,7 @@ class CRUD_controller extends Base_controller {
         // Effettua inserimento di un nuovo elemento da model
         $inserted = $this->get_model()->insert($to_insert);
         if ($inserted === FALSE) {
-            $this->handle_internal_error('Errore chiamata a metodo insert - model: ' . $this->model_alias . ' - dati: ' . json_encode($to_insert));
+            $this->handle_internal_error('Errore chiamata a metodo insert - model: ' . $this->get_module_name() . '::' . $this->get_model_alias() . ' - dati: ' . json_encode($to_insert));
             die();
         }
         
@@ -230,7 +218,7 @@ class CRUD_controller extends Base_controller {
         // Lettura dati da inserire
         $to_update = $this->parse_input_data();
         if (!$to_update) {
-            $this->handle_internal_error('Errore parsing input data - metodo update - model: ' . $this->model_alias);
+            $this->handle_internal_error('Errore parsing input data - metodo update - model: ' . $this->get_module_name() . '::' . $this->get_model_alias());
             die();
         }
         
@@ -239,7 +227,7 @@ class CRUD_controller extends Base_controller {
         // Effettua aggiornamento elemento da model
         $updated = $this->get_model()->update($id, $to_update);
         if ($updated === FALSE) {
-            $this->handle_internal_error('Errore chiamata a metodo update - model: ' . $this->model_alias . ' - dati: ' . json_encode($to_insert));
+            $this->handle_internal_error('Errore chiamata a metodo update - model: ' . $this->get_module_name() . '::' . $this->get_model_alias() . ' - dati: ' . json_encode($to_insert));
             die();
         }
         
@@ -270,7 +258,7 @@ class CRUD_controller extends Base_controller {
         // Effettua cancellazione elemento da model
         $deleted = $this->get_model()->delete($id);
         if ($deleted === FALSE) {
-            $this->handle_internal_error('Errore chiamata a metodo delete - model: ' . $this->model_alias . ' - chiave: ' . $id);
+            $this->handle_internal_error('Errore chiamata a metodo delete - model: ' . $this->get_module_name() . '::' . $this->get_model_alias() . ' - chiave: ' . $id);
             die();
         }
         
@@ -302,37 +290,6 @@ class CRUD_controller extends Base_controller {
             log_message('error', $error_msg);
         }
         $this->output->set_status_header('500');
-    }
-    
-    public function get_controller_name() {
-        return $this->controller_name;
-    }
-    
-    public function get_module_name() {
-        return $this->module_name;
-    }
-
-    public function set_module_name($module_name) {
-        $this->module_name = $module_name;
-    }
-    
-    public function set_controller_name($controller_name) {
-        $this->controller_name = $controller_name;
-    }
-    
-    public function get_model_alias() {
-        return $this->model_alias;
-    }
-
-    public function set_model_alias($model_alias) {
-        $this->model_alias = $model_alias;
-    }
-    
-    public function get_model($model_alias = NULL) {
-        if ($model_alias === NULL) {
-            $model_alias = $this->get_model_alias();
-        }
-        return $this->$model_alias;
     }
     
 }
