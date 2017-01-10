@@ -8,6 +8,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?=$includes?>
 </head>
 <body>
-    form di management ...
+    <!-- Toolbar -->
+    <div id="toolbar">
+        <cd-toolbar id="main-toolbar"
+                    linkedgrid="grid"
+                    buttonclickhandler="<?=components_get_handler('tester', 'Soggetto_management_form', 'on_toolbar_click')?>">
+            <cd-toolbaritem id="toolbar-add" icon="fa-plus">
+                <?=$this->lang->line('toolbar_aggiungi')?>
+            </cd-toolbaritem>
+            <cd-toolbaritem id="toolbar-edit" icon="fa-pencil">
+                <?=$this->lang->line('toolbar_modifica')?>
+            </cd-toolbaritem>
+            <cd-toolbaritem id="toolbar-delete" icon="fa-trash">
+                <?=$this->lang->line('toolbar_elimina')?>
+            </cd-toolbaritem>
+        </cd-toolbar>
+    </div>
+    
+    <!-- Datatable -->
+    <cd-datatable-wrapper>
+        <cd-datatable id="grid" datasource="<?=base_url('tester/Soggetto/query/' . $filters)?>" 
+                     paginator rows="10" 
+                     selectionmode="single" 
+                     caption="Soggetti"
+                     emptymessage="<?=$this->lang->line('nessun_elemento_trovato')?>">
+            <p-column field="sog_id" headertext="<?=$this->lang->line('caption_ID')?>" sortable filter></p-column>
+            <p-column field="sog_nominativo" headertext="Nominativo" sortable filter></p-column>
+            <p-column field="sog_indirizzo" headertext="Indirizzo" sortable filter></p-column>
+            <p-column field="sog_disabilitato" headertext="Dis." sortable filter></p-column>
+        </cd-datatable>
+    </cd-datatable-wrapper>
 </body>
 </html>
