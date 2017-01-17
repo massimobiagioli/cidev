@@ -123,6 +123,9 @@ if(!xtag.tags['cd-datatable']) {
             },
             emptymessage: {
                 attribute: {}
+            },
+            lazy: {
+                attribute: {}
             }
         },
 
@@ -168,7 +171,8 @@ if(!xtag.tags['cd-datatable']) {
                 $(this.xtag.container).puidatatable({
                     datasource: PUI.resolveObjectByName(this.datasource)||this.datasource,
                     columns: cols,
-                    paginator: this.paginator ? {rows: this.rows ? parseInt(this.rows) : 0, totalRecords: this.totalrecords ? parseInt(this.totalrecords) : 0} : null,
+                    paginator: this.paginator ? {rows: this.rows ? parseInt(this.rows) : 0, 
+                    totalRecords: this.totalrecords ? parseInt(this.totalrecords) : 0} : null,
                     selectionMode: this.selectionmode,
                     caption: this.caption,
                     footer: this.footer,
@@ -200,6 +204,7 @@ if(!xtag.tags['cd-datatable']) {
                     rowReorder: this.onrowreorder ? function(event, ui) {PUI.executeFunctionByName($this.onrowreorder, event, ui);} : null,
                     cellEdit: this.oncelledit ? function(event, ui) {PUI.executeFunctionByName($this.oncelledit, event, ui);} : null,
                     emptyMessage: this.emptymessage||'',
+                    lazy: this.lazy||'false'
                 });
             }
         },

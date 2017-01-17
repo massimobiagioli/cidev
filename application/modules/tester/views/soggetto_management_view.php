@@ -26,12 +26,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
     <!-- Datatable -->
-    <cd-datatable-wrapper>
-        <cd-datatable id="grid" datasource="<?=base_url('tester/Soggetto/query/' . $filters)?>" 
+    <cd-datatable-wrapper 
+        datasource="<?=base_url('tester/Soggetto/query/')?>"
+        querylimit="5">
+        
+        <cd-datatable id="grid"  
                      paginator 
-                     rows="10"
                      lazy
-                     totalrecords="20"
+                     totalrecords="6"
                      selectionmode="single" 
                      caption="Soggetti"
                      emptymessage="<?=$this->lang->line('nessun_elemento_trovato')?>">

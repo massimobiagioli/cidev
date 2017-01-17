@@ -39,21 +39,11 @@ class CRUD_form_management_controller extends CRUD_base_controller {
     public function index() {
         $data['includes'] = $this->load->view('common/common_includes_view', NULL, TRUE);
         $this->load_custom_data($data);
-        $data['filters'] = $this->init_querydata_filters();
         $this->load->view($this->get_model_alias() . '_management_view', $data);
     }
     
     public function on_toolbar_click($toolbar_id, $info) {
         $this->client_manager->console_log($toolbar_id, $toolbar_id, TRUE, TRUE);
-    }
-    
-    private function init_querydata_filters() {
-        $query_data = new stdClass();
-        $query_data->filters = [];
-        $query_data->sort = [];
-        $query_data->limit = query_limit_model($this->get_module_name());
-        $query_data->offset = 0;  
-        return urlencode(base64_encode(json_encode($query_data)));
     }
     
     /**
