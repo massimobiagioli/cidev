@@ -28,14 +28,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Datatable -->
     <cd-datatable-wrapper>
         <cd-datatable id="grid" datasource="<?=base_url('tester/Soggetto/query/' . $filters)?>" 
-                     paginator rows="10" 
+                     paginator 
+                     rows="10"
+                     lazy
+                     totalrecords="20"
                      selectionmode="single" 
                      caption="Soggetti"
                      emptymessage="<?=$this->lang->line('nessun_elemento_trovato')?>">
             <p-column field="sog_id" headertext="<?=$this->lang->line('caption_ID')?>" sortable filter></p-column>
             <p-column field="sog_nominativo" headertext="Nominativo" sortable filter></p-column>
             <p-column field="sog_indirizzo" headertext="Indirizzo" sortable filter></p-column>
-            <p-column field="sog_disabilitato" headertext="Dis." sortable filter></p-column>
         </cd-datatable>
     </cd-datatable-wrapper>
 </body>
