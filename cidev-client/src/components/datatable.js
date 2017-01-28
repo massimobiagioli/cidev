@@ -214,7 +214,7 @@ if(!xtag.tags['cd-datatable']) {
                 $(this.xtag.container).puidatatable('reload');
             },
             setTotalRecords: function(val) {
-                $(this.xtag.container).puidatatable('totalRecords', val);
+                $(this.xtag.container).puidatatable('setTotalRecords', val);
             }
         }
         

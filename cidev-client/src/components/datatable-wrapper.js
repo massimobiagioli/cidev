@@ -18,7 +18,7 @@ function datatableRegisterGlobalFunctions(gridId, gridObj, datasource, queryLimi
             filters: [],
             sort: [],
             limit: queryLimit,
-            offset: (ui.first > 0 ? ui.first - 1 : 0) 
+            offset: (ui.first > 0 ? ui.first : 0) 
         };
 
         // Effettua chiamata a server per caricamento blocco dati
@@ -79,6 +79,7 @@ if(!xtag.tags['cd-datatable-wrapper']) {
         lifecycle: {
             created: function() {
                 let element = $(this),
+                    that = this,
                     grid = element.children().eq(0).get(0),
                     childId = grid.id,
                     gridObj = $('#' + childId);
@@ -86,7 +87,6 @@ if(!xtag.tags['cd-datatable-wrapper']) {
                 // Registra funzioni globali per gestione DataGrid    
                 datatableRegisterGlobalFunctions(childId, gridObj, this.queryurl, this.querylimit);
 
-                // Registra attributi
                 if (this.counturl) {
                     getTotalRecords(this.counturl)
                     .then((value) => {
@@ -95,6 +95,8 @@ if(!xtag.tags['cd-datatable-wrapper']) {
                         console.error(err);
                     });                    
                 }
+
+                // Registra attributi
                 if (this.queryurl) {
                     gridObj.attr('datasource', 'dataGridLoad');
                 }
