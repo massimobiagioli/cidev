@@ -27,13 +27,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     
     <!-- Datatable -->
     <cd-datatable-wrapper 
-        datasource="<?=base_url('tester/Soggetto/query/')?>"
+        queryurl="<?=base_url('tester/Soggetto/query/')?>"
+        counturl="<?=base_url('tester/Soggetto/count_query/')?>"
         querylimit="5">
         
         <cd-datatable id="grid"  
                      paginator 
                      lazy
-                     totalrecords="6"
                      selectionmode="single" 
                      caption="Soggetti"
                      emptymessage="<?=$this->lang->line('nessun_elemento_trovato')?>">
