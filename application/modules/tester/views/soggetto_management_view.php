@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </cd-toolbar>
     </div>
     
-    <!-- Datatable -->
+    <!-- Datatable OLD 
     <cd-datatable-wrapper 
         queryurl="<?=base_url('tester/Soggetto/query/')?>"
         counturl="<?=base_url('tester/Soggetto/count_query/')?>"
@@ -42,5 +42,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <p-column field="sog_indirizzo" headertext="Indirizzo" sortable filter></p-column>
         </cd-datatable>
     </cd-datatable-wrapper>
+    -->
+    
+    <cd-datatable-crud 
+        id="grid"
+        baseurl="<?=base_url('tester/Soggetto')?>"
+        querylimit="5"
+        caption="Soggetti"
+        emptymessage="<?=$this->lang->line('nessun_elemento_trovato')?>">
+
+    </cd-datatable-crud>
+    
 </body>
 </html>

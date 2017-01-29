@@ -44,22 +44,6 @@ function datatableRegisterGlobalFunctions(gridId, gridObj, datasource, queryLimi
     }
 }
 
-function getTotalRecords(counturl) {
-    let queryData = {
-        filters: [],
-        sort: [],
-        limit: 0,
-        offset: 0 
-    };
-
-    return $.ajax({
-        type: "GET",
-        url: counturl + btoa(JSON.stringify(queryData)),
-        dataType: "json",
-        context: this
-    });
-}
-
 if(!xtag.tags['cd-datatable-wrapper']) {
     xtag.register('cd-datatable-wrapper', {
         accessors: {
@@ -67,9 +51,6 @@ if(!xtag.tags['cd-datatable-wrapper']) {
                 attribute: {}
             },
             queryurl: {
-                attribute: {}
-            },
-            counturl: {
                 attribute: {}
             },
             querylimit: {
@@ -86,15 +67,6 @@ if(!xtag.tags['cd-datatable-wrapper']) {
 
                 // Registra funzioni globali per gestione DataGrid    
                 datatableRegisterGlobalFunctions(childId, gridObj, this.queryurl, this.querylimit);
-
-                if (this.counturl) {
-                    getTotalRecords(this.counturl)
-                    .then((value) => {
-                        gridObj.attr('totalrecords', value.RC);
-                    }, (err) => {
-                        console.error(err);
-                    });                    
-                }
 
                 // Registra attributi
                 if (this.queryurl) {
